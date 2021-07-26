@@ -1,0 +1,10 @@
+src/main/hxml/libs.hxml
+
+-lib hscript
+-lib tink_priority;
+
+-D hscriptPos
+
+-cp src/main/haxe
+-neko run.n
+-main Run

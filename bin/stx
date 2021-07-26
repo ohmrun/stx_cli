@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+#-Dexec.workingdir="$CWD" -Dexec.args="$*"
+
+#echo "$@";
+#echo "$*";
+#echo $0;
+#echo $$;
+#echo $*;
+#echo $#;
+
+
+#ARGS="$(echo $1)"
+#shift
+
+#while (( "$#" )); do
+#    ARGS=$ARGS $1
+#    shift
+#done
+
+haxelib run stx_cli "$@";
+
+

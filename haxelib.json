@@ -1,0 +1,21 @@
+{
+  "name"                : "stx_cli",
+  "version"             : "0.1.0",
+  "dependencies": {
+    
+    
+    "tink_core"         : "",
+    "tink_priority"     : "",
+    
+    "stx_pico"          : "",
+    "stx_nano"          : "",
+    "stx_fn"            : "1.0.0",
+    "stx_ds"            : "",
+    "stx_assert"        : "",
+    "stx_run"           : ""
+  },
+  "contributors": ["0b1kn00b"],
+  "license": "MIT",
+  "releasenote": "preparing for release",
+  "classPath": "src/main/haxe"
+}

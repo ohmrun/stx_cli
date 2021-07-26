@@ -1,0 +1,7 @@
+-cp src/main/haxe
+
+src/main/hxml/libs.hxml
+
+-D analyzer-optimize
+-main Main
+--interp
