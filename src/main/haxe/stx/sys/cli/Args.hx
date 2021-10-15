@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 @:forward(map,join,length,is_defined) abstract Args(Array<Dynamic>) from Array<Dynamic>{
   @:arrayAccess

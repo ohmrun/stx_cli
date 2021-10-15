@@ -1,12 +1,12 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 @:forward(length) abstract ArgsInitial(Array<Dynamic>) from Array<Dynamic>{
   private function new(){
-    this = Sys.args();
+    this = __.sys().args();
   }
   static public inline function inj() return ArgsInitialConstructor.ZERO;
   public function is_haxelib_run(){
-    return Sys.getEnv("HAXELIB_RUN") == "1";
+    return __.sys().env("HAXELIB_RUN") == "1";
   }
   public function method(){
     return is_haxelib_run() ? ExecutingHaxelibRun : ExecutingScript;
@@ -31,7 +31,7 @@ package stx.cli.pack;
 
   }
 }
-@:access(stx.cli) class ArgsInitialConstructor extends Clazz{
+@:access(stx.sys.cli) class ArgsInitialConstructor extends Clazz{
   static public var ZERO = new ArgsInitialConstructor();
   public function unit(){
     return new ArgsInitial();

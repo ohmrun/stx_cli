@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 class Executor{
   public var context(default,null) : Context;
@@ -7,13 +7,12 @@ class Executor{
     this.context = context == null ? Context.unit() : context;
   }
   public function execute():Execute<CliFailure>{
-    for (handler in stx.Cli.handlers){
+    for (handler in stx.sys.Cli.handlers){
       handler.handle(context);
     }
-    var iter            = stx.Ext.LiftIterableToIter.toIter;
-    var values          = iter(context.handlers).map(fn -> fn(context));
+    var values          = Iter.lift(context.handlers).map(fn -> fn(context));
 
-    var implementations = values.toIter().lfold(
+    var implementations : Array<ImplementationApi> = values.toIter().lfold(
       (next,memo:Array<ImplementationApi>) -> switch next{
         case Accept(impl)  : memo.snoc(impl);
         case Reject(_)     : memo;
@@ -26,8 +25,8 @@ class Executor{
         Execute.fromOption(Some((values.toIter()).lfold(
           (next,memo:Err<CliFailure>) -> switch next
           {
-            case Reject(impl)    : impl.next(memo);
-            default               : memo;
+            case Reject(impl)    : impl.merge(memo);
+            default              : memo;
           },
           __.fault().of(E_NoHandler)
         )))

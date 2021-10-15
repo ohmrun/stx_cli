@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 class Command extends Implementation{
   
   public var command(default,null)    : String;
@@ -11,7 +11,7 @@ class Command extends Implementation{
     return '$command ${args.args_without_specials().join(" ")}';
   }
   override public function reply(){
-    var res = Sys.command(command,args.args_without_specials().map(Std.string));
+    var res = std.Sys.command(command,args.args_without_specials().map(Std.string));
     var out = res == 0 ? None : Some(__.fault().of(E_ErrorCode(res)));
 
     return Execute.fromOption(out);

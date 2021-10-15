@@ -6,3 +6,4 @@
 -lib stx_ds
 -lib stx_assert
 -lib stx_parse
+-lib stx_asys

@@ -1,6 +1,6 @@
 package cmd.store;
 
-using stx.cli.Package;
+using stx.sys.cliage;
 
 import sys.io.File;
 import haxe.io.Path;

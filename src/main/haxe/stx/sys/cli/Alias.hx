@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 class Alias extends Implementation{
   public function new(name:String,delegate:Implementation){

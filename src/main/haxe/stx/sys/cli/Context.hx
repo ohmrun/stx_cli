@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 class Context{
 
@@ -22,7 +22,7 @@ class Context{
     return '$method at $working_directory from $calling_directory with $args}';
   }
   static public inline function unit():Context{
-    trace(Sys.args());
+    trace(__.sys().args());
     var inits   = ArgsInitial.inj().unit();
     //trace(inits);
     //__.log().close().trace(inits.length);
@@ -46,7 +46,7 @@ class Context{
     ).fudge().value().fudge();
 
     trace(arguments);
-    return make(Sys.getCwd(),inits.calling_directory(),inits.method(),arguments);
+    return make(__.sys().cwd().get(),inits.calling_directory(),inits.method(),arguments);
   }
   static public inline function make(working_directory,calling_directory,method,args):Context{
     return new Context(working_directory,calling_directory,method,args);

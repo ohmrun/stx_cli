@@ -1,4 +1,4 @@
-package stx.cli.pack.handler;
+package stx.sys.cli.handler;
 
 import stx.core.alias.StdType;
 

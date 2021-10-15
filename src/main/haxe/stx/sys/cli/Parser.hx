@@ -1,7 +1,7 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 import stx.parse.Parser in Prs;
-using stx.cli.pack.Parser;
+using stx.sys.cli.Parser;
 
 function id(str){
   return __.parse().id(str);
@@ -60,6 +60,6 @@ class Parser{
     return word().then(Accessor).tagged('accessor');
   }
   public function literal():AbstractParser<String,CliToken>{
-    return g(Parse.something().one_many().tokenize().tagged('literal').then(Literal));
+    return g(stx.parse.Parser.Something().one_many().tokenize().tagged('literal').then(Literal));
   }
 }

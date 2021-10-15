@@ -1,4 +1,4 @@
-package stx.cli;
+package stx.sys.cli;
 
 using tink.CoreApi;
 
@@ -9,9 +9,6 @@ import haxe.crypto.Base64;
 
 import stx.Parse.Parser in AbstractParser;
 
-import stx.cli.Package;
-
-using stx.Arw;
 using stx.Pico;
 using stx.Nano;
 using stx.Fp;
@@ -20,7 +17,10 @@ using stx.Parse;
 using stx.Fn;
 
 using stx.Log;
-using stx.Ext;
 using stx.ASys;
+using stx.Sys;
 
-using stx.cli.Package;
+using eu.ohmrun.Fletcher;
+
+using stx.Sys;
+using stx.sys.Cli;

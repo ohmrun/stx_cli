@@ -1,9 +1,16 @@
-package stx.cli.pack.handler;
+package stx.sys.cli.handler;
 
 import stx.core.alias.StdType;
 
-class ImplementationInstantiator implements HandlerApi{
-  public function new(){}
+class AliasInstantiator implements HandlerApi{
+
+  public var aliases(default,null):Map<String,Alias>;
+  public function new(aliases:Array<Alias>){
+    this.aliases = new Map();
+    for(alias in aliases){
+      this.aliases.set(alias.name,alias);
+    }
+  }
   
   private var arguments : ArgumentsParsed;
   private var command   : CliToken;
@@ -13,23 +20,23 @@ class ImplementationInstantiator implements HandlerApi{
     command               = arguments[0];
     arguments             = arguments.tail();
     ctx.handlers.whenever(switch(command){
-      case null           : (_) -> __.reject(__.fault().of(E_NoHandler));
-      case Accessor(str)  : (_) -> def(str,ctx);
-      default             : (_) -> __.reject(__.fault().of(E_CommandShouldBeAccessor(command)));
+      case null           : (_)   -> __.reject(__.fault().of(E_NoHandler));
+      case Accessor(str)  : (ctx) -> def(str,ctx);
+      default             : (_)   -> __.reject(__.fault().of(E_CommandShouldBeAccessor(command)));
     });
   }
   private function def(cmd,ctx):Res<ImplementationApi,CliFailure>{
-    var clazz = StdType.resolveClass(cmd);
+    var clazz = this.aliases.exists(cmd);
     return if(clazz== null){
       __.reject(__.fault().of(E_CannotFindClass(cmd)));
     }else{
-      var instance          = Std.downcast(StdType.createInstance(clazz,[]),ImplementationApi);
+      var instance          = aliases.get(cmd);
           instance.args     = arguments;
       if(instance == null){
         __.reject(__.fault().of(E_CannotFindClass(cmd)));
       }else{
         instance.context = ctx;
-        __.accept(instance);
+        __.accept(instance.asImplementationApi());
       }
     }
   }

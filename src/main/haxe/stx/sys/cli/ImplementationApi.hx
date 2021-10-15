@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 interface ImplementationApi{
   public var context  : Context;

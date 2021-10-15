@@ -1,6 +1,6 @@
 package stx.fail;
 
-import stx.cli.Package;
+import stx.sys.Cli;
 
 enum CliFailure{
   E_NoImplementation;

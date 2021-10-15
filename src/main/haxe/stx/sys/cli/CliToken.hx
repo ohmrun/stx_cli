@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 enum CliToken{  
   Isolate(prim:Primitive);

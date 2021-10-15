@@ -1,6 +1,6 @@
-package stx.cli;
+package stx.sys.cli;
 
-import stx.cli.test.*;
+import stx.sys.cli.test.*;
 
 class Test{
   static public function main(){
@@ -12,7 +12,7 @@ class Test{
 class CliParserTest extends haxe.unit.TestCase{
   public function _testParser(){
     var reader = 'abs "TEST" 1'.reader();
-    var parser = new stx.cli.pack.Parser();
+    var parser = new stx.sys.cli.Parser();
     var result = parser.parse(reader).fudge();
     trace(result);
   }
@@ -29,7 +29,7 @@ class CliParserTest extends haxe.unit.TestCase{
     trace(cwd);
     var fn  = cwd.entry('run.n').canonical(env.device.sep);
     trace(fn);    
-    var cmd = Sys.command('neko',[fn,'cmd.test.TestCliParse','1','true','"who kernoos"']);
+    var cmd = std.Sys.command('neko',[fn,'cmd.test.TestCliParse','1','true','"who kernoos"']);
     trace(cmd);
   }
 }

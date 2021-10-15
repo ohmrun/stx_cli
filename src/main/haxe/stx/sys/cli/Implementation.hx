@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 class Implementation implements ImplementationApi{
   public var args                   : ArgumentsParsed;

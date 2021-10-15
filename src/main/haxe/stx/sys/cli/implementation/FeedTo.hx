@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 class FeedTo extends Clazz{
   public function new(){

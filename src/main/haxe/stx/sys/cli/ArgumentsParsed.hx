@@ -1,4 +1,4 @@
-package stx.cli.pack;
+package stx.sys.cli;
 
 @:forward(length)abstract ArgumentsParsed(Array<CliToken>) from Array<CliToken> to Array<CliToken>{
   public function new(self) this = __.option(self).defv([]);
