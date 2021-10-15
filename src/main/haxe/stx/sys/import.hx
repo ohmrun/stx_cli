@@ -19,6 +19,7 @@ using stx.Fn;
 using stx.Log;
 using stx.ASys;
 using stx.Sys;
+using stx.Assert;
 
 using eu.ohmrun.Fletcher;
 
