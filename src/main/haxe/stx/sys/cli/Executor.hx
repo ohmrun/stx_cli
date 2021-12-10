@@ -23,9 +23,9 @@ class Executor{
       () -> implementations[0].reply(),
       () -> 
         Execute.fromOption(Some((values.toIter()).lfold(
-          (next,memo:Err<CliFailure>) -> switch next
+          (next,memo:Rejection<CliFailure>) -> switch next
           {
-            case Reject(impl)    : impl.merge(memo);
+            case Reject(impl)    : impl.concat(memo);
             default              : memo;
           },
           __.fault().of(E_NoHandler)

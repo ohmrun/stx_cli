@@ -8,6 +8,6 @@ class Implementation implements ImplementationApi{
     return this;
   }
   public function reply(){
-    return Execute.fromErr(__.fault().of(E_NoImplementation));
+    return Execute.fromRejection(__.fault().of(E_NoImplementation));
   }
 }

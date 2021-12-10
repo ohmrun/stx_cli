@@ -28,7 +28,7 @@ class Cli{
     var executor  = new Executor(context);
     var result    = executor.execute(); 
         result.environment(
-          () -> {},
+          ()  -> {},
           (e) -> {
             trace(e);
             std.Sys.exit(1);
