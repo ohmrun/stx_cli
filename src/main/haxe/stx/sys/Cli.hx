@@ -3,7 +3,6 @@ package stx.sys;
 
 typedef CliFailure          = stx.fail.CliFailure;
 
-typedef Alias               = stx.sys.cli.Alias;
 typedef Args                = stx.sys.cli.Args;
 typedef ArgsInitial         = stx.sys.cli.ArgsInitial;
 typedef ArgumentsParsed     = stx.sys.cli.ArgumentsParsed;
@@ -11,15 +10,13 @@ typedef Parser              = stx.sys.cli.Parser;
 typedef ExecutionMethod     = stx.sys.cli.ExecutionMethod;
 typedef Context             = stx.sys.cli.Context;
 typedef CliToken            = stx.sys.cli.CliToken;
-typedef HandlerApi          = stx.sys.cli.HandlerApi;
 
 typedef Executor            = stx.sys.cli.Executor;
-typedef Implementation      = stx.sys.cli.Implementation;
-typedef ImplementationApi   = stx.sys.cli.ImplementationApi;
-typedef Command             = stx.sys.cli.Command;
+typedef ProgramApi          = stx.sys.cli.Program.ProgramApi;
+typedef Program             = stx.sys.cli.Program;
 
 class Cli{
-  static public var handlers(default,never) : Queue<HandlerApi> = new Queue();
+  static public var handlers(default,never) : Queue<ProgramApi> = new Queue();
   static public function main(){
 
     var context   = stx.sys.cli.Context.unit();

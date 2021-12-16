@@ -8,7 +8,7 @@ class Context{
   public var method(default,null):ExecutionMethod;
   public var args(default,null):ArgumentsParsed;
 
-  public var handlers(default,null):Queue<Context->Res<ImplementationApi,CliFailure>>;
+  public var handlers(default,null):Queue<Context->Res<Program,CliFailure>>;
 
   private function new(working_directory:String,calling_directory:Option<String>,method,args){
     this.working_directory  = working_directory;
@@ -33,7 +33,7 @@ class Context{
     var interest  = rest.map(
       (str:String) -> (str.contains(" ") || str.contains(" ") || str.contains("\n")).if_else(
         () -> (!StringTools.startsWith(str,'"')).if_else(
-          () -> __.log().through()('"$str"'),
+          () -> '"$str"',
           () -> str
         ),
         () -> str
@@ -45,7 +45,8 @@ class Context{
       )
     ).fudge().value().fudge();
 
-    trace(arguments);
+    __.log().info(_ -> _.pure(arguments));
+    
     return make(__.sys().cwd().get(),inits.calling_directory(),inits.method(),arguments);
   }
   static public inline function make(working_directory,calling_directory,method,args):Context{

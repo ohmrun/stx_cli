@@ -20,8 +20,11 @@ using stx.Log;
 using stx.ASys;
 using stx.Sys;
 using stx.Assert;
+using stx.Coroutine;
+using stx.Proxy;
 
 using eu.ohmrun.Fletcher;
 
 using stx.Sys;
+using stx.Io;
 using stx.sys.Cli;
