@@ -23,7 +23,7 @@ class Cli{
     
     __.log()(context.info());
     var executor  = new Executor(context);
-    var result    = executor.execute(); 
+    var result    = $type(executor.execute()); 
         result.environment(
           ()  -> {},
           (e) -> {
