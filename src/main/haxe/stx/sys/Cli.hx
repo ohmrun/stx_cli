@@ -1,5 +1,6 @@
 package stx.sys;
 
+using stx.Log;
 
 typedef CliFailure          = stx.fail.CliFailure;
 
@@ -18,16 +19,28 @@ typedef Program             = stx.sys.cli.Program;
 class Cli{
   static public var handlers(default,never) : Queue<ProgramApi> = new Queue();
   static public function main(){
-
+    final log       = __.log().global;
+          //log.includes.push('eu/ohmrun/fletcher');
+          //log.includes.push('stx/stream');
+          //log.includes.push('stx/stream/DEBUG');
+          //log.includes.push('stx/parse');
+          //log.includes.push('**');
+          //log.includes.push('**/*');
+          //log.includes.push('**/**/*');
+          log.level = DEBUG;
+          log.includes.push("stx/asys");
+          log.includes.push("stx/io");
+             
+    handlers.add({ data : new stx.sys.cli.term.Echo() });
     var context   = stx.sys.cli.Context.unit();
     
-    __.log()(context.info());
+    __.log().info(context.info());
     var executor  = new Executor(context);
     var result    = executor.execute(); 
         result.environment(
           ()  -> {},
           (e) -> {
-            trace(e);
+            __.log().debug(_ -> _.pure(e));
             std.Sys.exit(1);
           }
         ).submit();

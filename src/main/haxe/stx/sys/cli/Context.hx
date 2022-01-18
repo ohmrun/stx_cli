@@ -21,15 +21,10 @@ class Context{
   public function info(){
     return '$method at $working_directory from $calling_directory with $args}';
   }
-  static public inline function unit():Context{
-    trace(__.sys().args());
-    var inits   = ArgsInitial.inj().unit();
-    //trace(inits);
-    //__.log().close().trace(inits.length);
-    //__.log().close().trace(inits.prj()[0]);
-    var rest      = inits.args_not_including_call_directory();
+  static public function unit():Context{
 
-    //scooby
+    var inits     = ArgsInitial.inj().unit();
+    var rest      = inits.args_not_including_call_directory();
     var interest  = rest.map(
       (str:String) -> (str.contains(" ") || str.contains(" ") || str.contains("\n")).if_else(
         () -> (!StringTools.startsWith(str,'"')).if_else(
@@ -39,11 +34,18 @@ class Context{
         () -> str
       )
     ).join("");
-    var arguments = new Parser().parse(interest.reader()).convert(
+    __.log().info(interest);
+
+    var method    = new Parser().parse(interest.reader()).convert(
       (res:ParseResult<String,Array<CliToken>>) -> res.toRes().map(
         arr -> arr.defv([]) 
       )
-    ).fudge().value().fudge();
+    );
+    var result    = method.fudge();
+    
+    __.log().debug(_ -> _.pure(result));
+    $type(result);
+    var arguments = result.value().fudge();
 
     __.log().info(_ -> _.pure(arguments));
     

@@ -10,6 +10,5 @@ enum CliFailure{
   E_CannotFindClass(string:String);
   E_CommandShouldBeAccessor(cmd:CliToken);
   E_Cli_Io(f:IoFailure);
-  E_Cli_Coroutine(e:CoroutineFailure<CliFailure>);
   E_Cli_ProcessFailure(e:ProcessFailure);
 }

@@ -19,60 +19,75 @@ class Executor{
       ),
       Produce.reject(__.fault().of(E_NoImplementation))
     ).point(
-      (o:Process) -> Execute.lift(
-        Action.lift(
-          Server._.next(
-            Proxy._.errate(o.prj(),E_Cli_Io),
-            function rec(y:ProcessResponse) : Proxy<ProcessRequest,ProcessResponse,Noise,Closed,Noise,CliFailure>{
-              return switch(y){
-                case PResState({ exit_code : Some(0) }) : 
-                  __.ended(Tap);
-                case PResState({ exit_code : Some(i) }) : 
-                  __.ended(End(__.fault().of(E_ErrorCode(i))));
-                case PResState({ exit_code : None }) :
-                  __.await(PReqIdle,rec);
-                case PResValue(res)   : 
-                  function pull(output:Output,val:InputResponse){
-                    return Belay.lift(
-                      Effect.lift(
-                        //put output pipe(O) to result(R)
-                        Output._.relate(
-                          val.toOutputRequest().fold(
-                            v   -> output.provide(v),
-                            ()  -> output
-                          ))
-                          //close the input pipe( I = OutputRequest )
-                          .derive()
-                          .errate(E_Cli_Io)
-                      ).toExecute()
-                       .errate(E_Cli_Coroutine)
-                       .then(
-                        Fletcher.Sync(
-                          (report:Report<CliFailure>) -> report.fold(
-                            err  -> __.ended(End(err)),
-                            ()   -> __.await(PReqIdle,rec)
-                          )
-                        )
-                      )
-                    );
-                  }
-                  //$type(pull);
-                  switch(res){
-                    case Failure(er) : pull(__.asys().stderr(),er);
-                    case Success(ok) : pull(__.asys().stdout(),ok);
-                  }
-                  //:Outcome<InputResponse,InputResponse>
-                case PResError(raw) :
-                  //:Rejection<ProcessFailure>
-                  __.ended(End(raw.errate(E_Cli_ProcessFailure)));
-                case PResReady : 
-                  __.await(PReqIdle,rec);
-              }
-            }
-          )
-        ).toExecute()
-         .errate(E_Cli_Coroutine)
-      ) 
+      (o:Process) -> 
+        { 
+          return Execute.lift(
+            Action.lift(
+              Server._.next(
+                Proxy._.errate(o.prj(),E_Cli_Io),
+                step
+              )
+            ).toExecute()
+            .errate(E_Cli_Coroutine)
+          );
+        } 
     );
   }
+  static function step(y:ProcessResponse){
+    final NOT_INITED = 0;
+    final state = {
+      code : NOT_INITED
+    };
+    function rec(y:ProcessResponse) : Proxy<ProcessRequest,ProcessResponse,Noise,Closed,Noise,CliFailure>{
+      return switch(y){
+        case PResState({ status : Io_Process_Init } ) : 
+          
+        case PResState({ exit_code : Some(0) }) : __.ended(Tap);
+        case PResState({ exit_code : Some(i) }) : __.ended(End(__.fault().of(E_ErrorCode(i))));
+        case PResState({ exit_code : None })    : __.await(PReqTouch,rec);
+        case PResValue(res)   : 
+          function pull(output:Output,val:InputResponse){
+            return Belay.lift(
+              Effect.lift(
+                //put output pipe(O) to result(R)
+                Output._.relate(
+                  val.toOutputRequest().fold(
+                    v   -> output.provide(v),
+                    ()  -> output
+                  ))
+                  //close the input pipe( I = OutputRequest )
+                  .derive()
+                  .errate(E_Cli_Io)
+              ).toExecute()
+            .errate(E_Cli_Coroutine)
+            .then(
+              Fletcher.Sync(
+                (report:Report<CliFailure>) -> report.fold(
+                  err  -> __.ended(End(err)),
+                  ()   -> __.await(PReqTouch,rec)
+                )
+              )
+            )
+          );
+        }
+        //$type(pull);
+        switch(res){
+          case Failure(er) : pull(__.asys().stderr(),er);
+          case Success(ok) : pull(__.asys().stdout(),ok);
+        }
+        //:Outcome<InputResponse,InputResponse>
+      case PResError(raw) :
+        //:Rejection<ProcessFailure>
+        __.ended(End(raw.errate(E_Cli_ProcessFailure)));
+      case PResReady : 
+        //TODO request data
+        switch(state.code){
+          case NOT_INITED : 
+        }
+        __.await(PReqTouch,rec);
+      };
+    }
+    return rec(y);
+  }
+  function  
 }

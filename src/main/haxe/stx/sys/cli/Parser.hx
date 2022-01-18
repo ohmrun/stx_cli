@@ -40,7 +40,7 @@ class Parser{
         .then(Option.pure)
         .many()
         .then(
-          (arr) -> arr.flat_map(
+          (arr) -> __.tracer()(arr).flat_map(
             opt -> opt.toArray()
           )
         ).provide(ipt);
