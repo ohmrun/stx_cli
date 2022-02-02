@@ -10,7 +10,7 @@ class Parser{
   static public function g<T,U>(p:Prs<String,U>):Prs<String,U>{
     return Parse.gap.many()._and(p);
   }
-  static public inline function eof<I,O>():AbstractParser<String,O> return g(stx.parse.Parser.Eof());
+  static public inline function eof<I,O>():AbstractParser<String,O> return g(stx.parse.Parsers.Eof());
 
   static public var dot           = ".".id();
   static public var underscore    = "_".id();  
@@ -40,9 +40,12 @@ class Parser{
         .then(Option.pure)
         .many()
         .then(
-          (arr) -> __.tracer()(arr).flat_map(
-            opt -> opt.toArray()
-          )
+          (arr) -> {
+            //__.log().debug(_ -> _.pure(arr));
+            return arr.flat_map(
+              opt -> opt.toArray()
+            );
+          }
         ).provide(ipt);
   }
   public function suggest():AbstractParser<String,CliToken>{
@@ -60,6 +63,6 @@ class Parser{
     return word().then(Accessor).tagged('accessor');
   }
   public function literal():AbstractParser<String,CliToken>{
-    return g(stx.parse.Parser.Something().one_many().tokenize().tagged('literal').then(Literal));
+    return g(stx.parse.Parsers.Something().one_many().tokenize().tagged('literal').then(Literal));
   }
 }

@@ -34,7 +34,7 @@ class Context{
         () -> str
       )
     ).join("");
-    __.log().info(interest);
+    //__.log().info(interest);
 
     var method    = new Parser().parse(interest.reader()).convert(
       (res:ParseResult<String,Array<CliToken>>) -> res.toRes().map(
@@ -42,12 +42,11 @@ class Context{
       )
     );
     var result    = method.fudge();
-    
-    __.log().debug(_ -> _.pure(result));
-    $type(result);
+    //__.log().debug(_ -> _.pure(result));
+    //$type(result);
     var arguments = result.value().fudge();
 
-    __.log().info(_ -> _.pure(arguments));
+    //__.log().info(_ -> _.pure(arguments));
     
     return make(__.sys().cwd().get(),inits.calling_directory(),inits.method(),arguments);
   }

@@ -1,8 +1,8 @@
 {
   "build" : {
-    "-D"    : ["no-deprecation-warnings","stx.log.null"],
+    "-D"    : ["no-deprecation-warnings"],
     "-cp"   : ["src/main/haxe"],
-    "-lib"  : ["tink_priority","tink_core","stx_pico","stx_nano","stx_fn","stx_ds","stx_assert","stx_parse","stx_asys","stx_fp","stx_log","stx_test"],
+    "-lib"  : ["tink_priority","tink_core","stx_pico","stx_nano","stx_fn","stx_ds","stx_assert","stx_parse","stx_asys","stx_fp","stx_log","stx_test","haxe-files"],
     "unit"  : {
       "--macro" : [
         "include('stx.sys.cli',true)",
@@ -17,6 +17,15 @@
       "interp"  : {
         "--interp"  : true
       }
+    },
+    "test" : {
+      "-main" : "stx.sys.cli.Test",
+      "interp" : {
+        "--interp" : true
+      }
+    },
+    "run" : {
+      "--run" : ["stx.sys.Cli"]
     }
   },
   "run" : {
