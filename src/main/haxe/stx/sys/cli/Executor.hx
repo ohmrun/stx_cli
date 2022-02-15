@@ -2,10 +2,10 @@ package stx.sys.cli;
 
 //TODO Pass InputRequests forward to console
 class Executor{
-  public var context(default,null) : Context;
+  public var context(default,null) : CliContext;
 
   public function new(?context){
-    this.context = context == null ? Context.unit() : context;
+    this.context = context == null ? CliContext.unit() : context;
   }
   public function execute(){
     return @:privateAccess (stx.sys.Cli.handlers.toArray().lfold(
@@ -13,7 +13,7 @@ class Executor{
         (res:Res<Process,CliFailure>) -> __.tracer()(res).fold(
           ok -> Produce.pure(ok),
           no -> switch(no.val){
-            case Some(EXCEPT(E_NoImplementation))   : 
+            case Some(REJECT(E_NoImplementation))   : 
               __.log().debug(_ -> _.pure(next));
               (Modulate.fromApi(next).produce(__.accept(context)));
             default                                 : (Produce.reject(no));

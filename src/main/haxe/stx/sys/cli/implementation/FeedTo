@@ -4,7 +4,7 @@ class FeedTo extends Clazz{
   public function new(){
     super();
   }
-  public var context : Context;
+  public var context : CliContext;
 
   public function reply(){
     return Future.sync(None);

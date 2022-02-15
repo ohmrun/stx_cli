@@ -1,6 +1,6 @@
 package stx.sys.cli;
 
-typedef ProgramApi = ModulateApi<Context,stx.io.Process,CliFailure>;
+typedef ProgramApi = ModulateApi<CliContext,stx.io.Process,CliFailure>;
 
 @:forward abstract Program(ProgramApi) from ProgramApi to ProgramApi{
   public function new(self) this = self;

@@ -14,13 +14,16 @@ class Parser{
 
   static public var dot           = ".".id();
   static public var underscore    = "_".id();  
+  static public var cutlery       = __.parse().reg('[/\\-_.]');
+
   static public var alpha         = Parse.alpha;
   static public var head          = Parse.alpha.or(underscore).tagged('head');
   static public var tail          = alpha.or(dot).or(underscore).tagged('tail');
+  static public var argument      = Parse.literal.or(Parse.symbol).tagged('literal').then(Literal);
 
   static public function word(){
     return g(head.and(tail.many()).then(
-      (tp) -> [tp.fst()].concat(tp.snd())
+      (tp) -> [tp.fst()].imm().concat(tp.snd())
     ).tokenize());
   }
 
@@ -31,19 +34,19 @@ class Parser{
 
   public function new(){}
 
-  public function parse(ipt:ParseInput<String>):Provide<ParseResult<String,Array<CliToken>>>{
+  public function parse(ipt:ParseInput<String>):Provide<ParseResult<String,Cluster<CliToken>>>{
     return special()
         .or(suggest())
         .or(isolate())
         .or(accessor())
-        .or(literal())
+        .or(argument)
         .then(Option.pure)
         .many()
         .then(
           (arr) -> {
             //__.log().debug(_ -> _.pure(arr));
             return arr.flat_map(
-              opt -> opt.toArray()
+              opt -> opt.toArray().imm()
             );
           }
         ).provide(ipt);
@@ -61,8 +64,5 @@ class Parser{
   }
   public function accessor(){
     return word().then(Accessor).tagged('accessor');
-  }
-  public function literal():AbstractParser<String,CliToken>{
-    return g(stx.parse.Parsers.Something().one_many().tokenize().tagged('literal').then(Literal));
   }
 }

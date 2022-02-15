@@ -10,8 +10,9 @@ typedef ArgsInitial         = stx.sys.cli.ArgsInitial;
 typedef ArgumentsParsed     = stx.sys.cli.ArgumentsParsed;
 typedef Parser              = stx.sys.cli.Parser;
 typedef ExecutionMethod     = stx.sys.cli.ExecutionMethod;
-typedef Context             = stx.sys.cli.Context;
+typedef CliContext          = stx.sys.cli.CliContext;
 typedef CliToken            = stx.sys.cli.CliToken;
+typedef CliTokenSum         = stx.sys.cli.CliToken.CliTokenSum;
 
 typedef Executor            = stx.sys.cli.Executor;
 typedef ProgramApi          = stx.sys.cli.Program.ProgramApi;
@@ -36,7 +37,7 @@ class Cli{
     
     //handlers.add({ data : new stx.sys.cli.term.Command() });
     //handlers.add({ data : new stx.sys.cli.term.Echo() });
-    var context   = stx.sys.cli.Context.unit();
+    var context   = stx.sys.cli.CliContext.unit();
     
     __.log().info(context.info());
     var executor  = new Executor(context);

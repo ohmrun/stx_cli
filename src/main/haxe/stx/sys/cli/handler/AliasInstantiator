@@ -15,7 +15,7 @@ class AliasInstantiator implements HandlerApi{
   private var arguments : ArgumentsParsed;
   private var command   : CliToken;
 
-  public function handle(ctx:Context){
+  public function handle(ctx:CliContext){
     arguments             = ctx.args;
     command               = arguments[0];
     arguments             = arguments.tail();

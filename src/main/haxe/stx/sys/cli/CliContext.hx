@@ -1,6 +1,6 @@
 package stx.sys.cli;
 
-class Context{
+class CliContext{
 
   public var calling_directory(default,null):Option<String>;
   public var working_directory(default,null):String;
@@ -8,7 +8,7 @@ class Context{
   public var method(default,null):ExecutionMethod;
   public var args(default,null):ArgumentsParsed;
 
-  public var handlers(default,null):Queue<Context->Res<Program,CliFailure>>;
+  public var handlers(default,null):Queue<CliContext->Res<Program,CliFailure>>;
 
   private function new(working_directory:String,calling_directory:Option<String>,method,args){
     this.working_directory  = working_directory;
@@ -21,7 +21,7 @@ class Context{
   public function info(){
     return '$method at $working_directory from $calling_directory with $args}';
   }
-  static public function unit():Context{
+  static public function unit():CliContext{
 
     var inits     = ArgsInitial.inj().unit();
     var rest      = inits.args_not_including_call_directory();
@@ -50,7 +50,7 @@ class Context{
     
     return make(__.sys().cwd().get(),inits.calling_directory(),inits.method(),arguments);
   }
-  static public inline function make(working_directory,calling_directory,method,args):Context{
-    return new Context(working_directory,calling_directory,method,args);
+  static public inline function make(working_directory,calling_directory,method,args):CliContext{
+    return new CliContext(working_directory,calling_directory,method,args);
   }
 }
