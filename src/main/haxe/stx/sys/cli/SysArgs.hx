@@ -16,7 +16,6 @@ package stx.sys.cli;
   public function method(){
     return is_haxelib_run() ? ExecutingHaxelibRun : ExecutingScript;
   }
-  
   public function args_not_including_call_directory():Cluster<Dynamic>{
     return is_haxelib_run().if_else(
       () -> this.rdropn(1),
