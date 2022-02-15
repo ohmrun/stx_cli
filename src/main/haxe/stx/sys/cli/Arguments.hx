@@ -1,14 +1,14 @@
 package stx.sys.cli;
 
-@:forward(length)abstract ArgumentsParsed(Array<CliToken>) from Array<CliToken> to Array<CliToken>{
-  public function new(self) this = __.option(self).defv([]);
+@:forward(length)abstract Arguments(Cluster<CliToken>) from Cluster<CliToken> to Cluster<CliToken>{
+  public function new(self:Cluster<CliToken>) this = __.option(self).defv([].imm());
   @:arrayAccess
   public function get(int:Int):CliToken{
     return this[int];
   }
-  static public function lift(self:Array<CliToken>):ArgumentsParsed return new ArgumentsParsed(self);
+  static public function lift(self:Cluster<CliToken>):Arguments return new Arguments(self);
   
-  public function specials():Array<String>{
+  public function specials():Cluster<String>{
     return this.map_filter(
       (x) -> switch(x){
         case Special(v) : Some(v);
@@ -16,9 +16,9 @@ package stx.sys.cli;
       }
     );
   }
-  public function args_without_specials():StdArray<Dynamic>{
+  public function args_without_specials():Cluster<Dynamic>{
     return this.lfold(
-      (next:CliToken,memo:Array<String>) -> switch(next){
+      (next:CliToken,memo:Cluster<String>) -> switch(next){
         case Special(s)           : memo;
         case Isolate(prim)        : memo.snoc(prim.toAny());
         case Accessor(lit)        : memo.snoc(lit);
@@ -27,13 +27,13 @@ package stx.sys.cli;
         case Suggest(name,true)   : memo.snoc('--$name'); 
       },
       []
-    ).prj();
+    );
   }
-  public function tail():ArgumentsParsed{
+  public function tail():Arguments{
     return this.tail();
   }  
 
-  public function prj():Array<CliToken> return this;
-  private var self(get,never):ArgumentsParsed;
-  private function get_self():ArgumentsParsed return lift(this);
+  public function prj():Cluster<CliToken> return this;
+  private var self(get,never):Arguments;
+  private function get_self():Arguments return lift(this);
 }

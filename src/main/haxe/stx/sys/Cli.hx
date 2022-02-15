@@ -5,9 +5,8 @@ using stx.sys.cli.Logging;
 
 typedef CliFailure          = stx.fail.CliFailure;
 
-typedef Args                = stx.sys.cli.Args;
-typedef ArgsInitial         = stx.sys.cli.ArgsInitial;
-typedef ArgumentsParsed     = stx.sys.cli.ArgumentsParsed;
+typedef SysArgs             = stx.sys.cli.SysArgs;
+typedef Arguments     = stx.sys.cli.Arguments;
 typedef Parser              = stx.sys.cli.Parser;
 typedef ExecutionMethod     = stx.sys.cli.ExecutionMethod;
 typedef CliContext          = stx.sys.cli.CliContext;

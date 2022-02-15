@@ -11,9 +11,7 @@ class Command implements ProgramApi extends eu.ohmrun.fletcher.term.Sync<Res<Cli
     return __.success(
       i.map(
         ok -> stx.io.Process.make0(
-          Cluster.lift(
-            [command].concat(ok.args.args_without_specials().map(Std.string))
-          )
+          [command].imm().concat(ok.args.args_without_specials().map(Std.string))
         )
       )
     ); 

@@ -1,10 +1,15 @@
 package stx.sys.cli;
 
-@:forward(length) abstract ArgsInitial(Array<Dynamic>) from Array<Dynamic>{
-  private function new(){
-    this = __.sys().args();
+@:forward(length) abstract SysArgs(Cluster<Dynamic>) from Cluster<Dynamic>{
+  static public function unit(){
+    return new SysArgs();
   }
-  static public inline function inj() return ArgsInitialConstructor.ZERO;
+  static public function pure(args){
+    return new SysArgs(args);
+  }
+  private function new(?args){
+    this = __.option(args).defv(__.sys().args().imm());
+  }
   public function is_haxelib_run(){
     return __.sys().env("HAXELIB_RUN") == "1";
   }
@@ -12,7 +17,7 @@ package stx.sys.cli;
     return is_haxelib_run() ? ExecutingHaxelibRun : ExecutingScript;
   }
   
-  public function args_not_including_call_directory():Args{
+  public function args_not_including_call_directory():Cluster<Dynamic>{
     return is_haxelib_run().if_else(
       () -> this.rdropn(1),
       () -> this
@@ -24,16 +29,13 @@ package stx.sys.cli;
       () -> None
     );
   }
-  public function prj():Array<Dynamic>{
+  public function prj():Cluster<Dynamic>{
     return this;
   }
   public function toArguments(){
 
   }
 }
-@:access(stx.sys.cli) class ArgsInitialConstructor extends Clazz{
-  static public var ZERO = new ArgsInitialConstructor();
-  public function unit(){
-    return new ArgsInitial();
-  }  
+class SysArgsLift{
+
 }

@@ -6,7 +6,7 @@ class CliContext{
   public var working_directory(default,null):String;
 
   public var method(default,null):ExecutionMethod;
-  public var args(default,null):ArgumentsParsed;
+  public var args(default,null):Arguments;
 
   public var handlers(default,null):Queue<CliContext->Res<Program,CliFailure>>;
 
@@ -23,7 +23,7 @@ class CliContext{
   }
   static public function unit():CliContext{
 
-    var inits     = ArgsInitial.inj().unit();
+    var inits     = SysArgs.unit();
     var rest      = inits.args_not_including_call_directory();
     var interest  = rest.map(
       (str:String) -> (str.contains(" ") || str.contains(" ") || str.contains("\n")).if_else(
@@ -37,7 +37,7 @@ class CliContext{
     //__.log().info(interest);
 
     var method    = new Parser().parse(interest.reader()).convert(
-      (res:ParseResult<String,Array<CliToken>>) -> res.toRes().map(
+      (res:ParseResult<String,Cluster<CliToken>>) -> res.toRes().map(
         arr -> arr.defv([]) 
       )
     );

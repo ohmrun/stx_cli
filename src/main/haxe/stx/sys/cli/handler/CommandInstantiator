@@ -5,7 +5,7 @@ import stx.core.alias.StdType;
 class CommandInstantiator implements HandlerApi{
   public function new(){}
   
-  private var arguments : ArgumentsParsed;
+  private var arguments : Arguments;
   private var command   : CliToken;
 
   public function handle(ctx:CliContext){
