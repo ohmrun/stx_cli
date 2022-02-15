@@ -14,7 +14,6 @@ class Parser{
 
   static public var dot           = ".".id();
   static public var underscore    = "_".id();  
-  static public var cutlery       = __.parse().reg('[/\\-]');
 
   static public var alpha         = Parse.alpha;
   static public var head          = Parse.alpha.or(underscore).tagged('head');

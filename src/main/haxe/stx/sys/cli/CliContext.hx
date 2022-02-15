@@ -25,22 +25,11 @@ class CliContext{
     return make0(__.sys().cwd().get(),SysArgs.unit());
   }
   static public inline function make0(working_directory:String,sys_args:SysArgs){
-    final rest      = sys_args.args_not_including_call_directory();
-    final method    = new Parser().parse(rest.reader()).convert(
+    final method    = new Parser().parse(sys_args.as_parseable_string().reader()).convert(
       (res:ParseResult<String,Cluster<CliToken>>) -> res.toRes().map(
         arr -> arr.defv([]) 
       )
     );
-        // .map(
-    //   (str:String) -> (str.contains(" ") || str.contains(" ") || str.contains("\n")).if_else(
-    //     () -> (!StringTools.startsWith(str,'"')).if_else(
-    //       () -> '"$str"',
-    //       () -> str
-    //     ),
-    //     () -> str
-    //   )
-    // ).join("");
-    //__.log().info(interest);
 
     var result    = method.fudge();
     //__.log().debug(_ -> _.pure(result));
