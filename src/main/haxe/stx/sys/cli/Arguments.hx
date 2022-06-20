@@ -6,7 +6,7 @@ package stx.sys.cli;
   public function get(int:Int):CliToken{
     return this[int];
   }
-  static public function lift(self:Cluster<CliToken>):Arguments return new Arguments(self);
+  @:noUsing static public function lift(self:Cluster<CliToken>):Arguments return new Arguments(self);
   
   public function specials():Cluster<String>{
     return this.map_filter(

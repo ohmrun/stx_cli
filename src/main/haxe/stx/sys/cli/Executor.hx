@@ -12,15 +12,15 @@ class Executor{
       (next:Program,memo:Produce<stx.io.Process,CliFailure>) -> memo.fold_flat_map(
         (res:Res<Process,CliFailure>) -> __.tracer()(res).fold(
           ok -> Produce.pure(ok),
-          no -> switch(no.val){
-            case Some(REJECT(E_NoImplementation))   : 
+          no -> switch(no.data){
+            case Some(EXTERIOR(E_Cli_NoImplementation))   : 
               __.log().debug(_ -> _.pure(next));
               (Modulate.fromApi(next).produce(__.accept(context)));
             default                                 : (Produce.reject(no));
           }
         )
       ),
-      Produce.reject(__.fault().of(E_NoImplementation))
+      Produce.reject(__.fault().of(E_Cli_NoImplementation))
     ));
   } 
 }

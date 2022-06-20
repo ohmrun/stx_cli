@@ -34,7 +34,7 @@ class CliContext{
     var result    = method.fudge();
     //__.log().debug(_ -> _.pure(result));
     //$type(result);
-    var arguments = result.value().fudge();
+    var arguments = result.option().fudge();
     return make(working_directory,sys_args.calling_directory(),sys_args.method(),arguments);
   }
   static public inline function make(working_directory,calling_directory,method,args):CliContext{

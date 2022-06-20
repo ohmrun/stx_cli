@@ -10,6 +10,7 @@ import haxe.crypto.Base64;
 import stx.Parse.Parser in AbstractParser;
 
 using stx.Pico;
+using stx.Fail;
 using stx.Nano;
 using stx.Fp;
 using stx.Ds;

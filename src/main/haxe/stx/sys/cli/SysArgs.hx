@@ -4,7 +4,7 @@ package stx.sys.cli;
   static public function unit(){
     return new SysArgs();
   }
-  static public function pure(args){
+  @:noUsing static public function pure(args){
     return new SysArgs(args);
   }
   private function new(?args){

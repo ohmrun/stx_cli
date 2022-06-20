@@ -9,7 +9,7 @@ enum CliTokenSum{
 }
 abstract CliToken(CliTokenSum) from CliTokenSum to CliTokenSum{
   public function new(self) this = self;
-  static public function lift(self:CliTokenSum):CliToken return new CliToken(self);
+  @:noUsing static public function lift(self:CliTokenSum):CliToken return new CliToken(self);
 
   public function prj():CliTokenSum return this;
   private var self(get,never):CliToken;
