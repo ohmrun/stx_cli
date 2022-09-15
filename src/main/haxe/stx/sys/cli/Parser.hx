@@ -12,56 +12,61 @@ class Parser{
   }
   static public inline function eof<I,O>():AbstractParser<String,O> return g(stx.parse.Parsers.Eof());
 
-  static public var dot           = ".".id();
-  static public var underscore    = "_".id();  
-
-  static public var alpha         = Parse.alpha;
-  static public var head          = Parse.alpha.or(underscore).tagged('head');
-  static public var tail          = alpha.or(dot).or(underscore).tagged('tail');
-  static public var argument      = Parse.literal.or(Parse.symbol).tagged('literal').then(Literal);
+  static public var literal       = Parse.literal.tagged('literal');
+  static public var symbol        = Parse.symbol.tagged('literal');
 
   static public function word(){
-    return g(head.and(tail.many()).then(
-      (tp) -> [tp.fst()].imm().concat(tp.snd())
-    ).tokenize());
+    return literal.or(symbol);
   }
 
   static public function token() return g(Parse.primitive());
   static public var minus         = '-'.id();
   static public var double_minus  = '--'.id();
-  static public var triple_minus  = '---'.id();
 
   public function new(){}
 
   public function parse(ipt:ParseInput<String>):Provide<ParseResult<String,Cluster<CliToken>>>{
-    return special()
-        .or(suggest())
-        .or(isolate())
-        .or(accessor())
-        .or(argument)
+    return 
+        opt()
+        .or(arg())
+        .and_(Parse.whitespace.or(Parsers.Eof()))
         .then(Option.pure)
-        .many()
+        .one_many()
         .then(
           (arr) -> {
-            //__.log().debug(_ -> _.pure(arr));
+            __.log().debug(_ -> _.pure(arr));
             return arr.flat_map(
-              opt -> opt.toArray().imm()
+              opt -> opt.fold(
+                x -> x,
+                () -> [].imm()
+              )
             );
           }
         ).provide(ipt);
   }
-  public function suggest():AbstractParser<String,CliToken>{
-    return double_minus._and(word()).then(Suggest.bind(_,true)).or(
-      minus._and(word()).then(Suggest.bind(_,false))
-    ).tagged('suggest');
+  public function opt():AbstractParser<String,Cluster<CliToken>>{
+    return double_minus.and(word()).then(__.decouple((x,y) -> [Opt('$x$y')].imm())).or(
+      minus.and(word()).then(
+        __.decouple(
+          (x:String,y:String) -> {
+            final incase_assignment = y.split('=');
+            final parts  = Chars.lift(incase_assignment[0]).iterator();
+            final partsI = Iter.make(parts).lfold(
+              (next:Chars,memo:Array<String>) -> {
+                return memo.snoc('$x$next');
+              },
+              []
+            );
+            if(Chars.lift(__.option(incase_assignment[1]).defv('')).is_defined()){
+              //possible -xyz=2 becomes -x,-y,-z=2
+              partsI[partsI.length-1] = '${partsI[partsI.length-1]}=${incase_assignment[1]}';
+            } 
+            return Cluster.lift(partsI.map(Opt));
+          }
+        )
+    )).tagged('opt');
   }
-  public function special():AbstractParser<String,CliToken>{
-    return triple_minus._and(word()).then(Special).tagged('special');
-  }
-  public function isolate():AbstractParser<String,CliToken>{
-    return token().then(Isolate).tagged('isolate');
-  }
-  public function accessor(){
-    return word().then(Accessor).tagged('accessor');
+  public function arg():AbstractParser<String,Cluster<CliToken>>{
+    return word().then(x -> [Arg(x)]);
   }
 }

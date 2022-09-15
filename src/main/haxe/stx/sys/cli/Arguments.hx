@@ -8,27 +8,6 @@ package stx.sys.cli;
   }
   @:noUsing static public function lift(self:Cluster<CliToken>):Arguments return new Arguments(self);
   
-  public function specials():Cluster<String>{
-    return this.map_filter(
-      (x) -> switch(x){
-        case Special(v) : Some(v);
-        default         : None;
-      }
-    );
-  }
-  public function args_without_specials():Cluster<Dynamic>{
-    return this.lfold(
-      (next:CliToken,memo:Cluster<String>) -> switch(next){
-        case Special(s)           : memo;
-        case Isolate(prim)        : memo.snoc(prim.toAny());
-        case Accessor(lit)        : memo.snoc(lit);
-        case Literal(lit)         : memo.snoc(lit);
-        case Suggest(name,false)  : memo.snoc('-$name');
-        case Suggest(name,true)   : memo.snoc('--$name'); 
-      },
-      []
-    );
-  }
   public function tail():Arguments{
     return this.tail();
   }  

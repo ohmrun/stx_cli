@@ -7,8 +7,10 @@ import stx.sys.cli.test.*;
 class Test{
   static public function main(){
     var log = __.log().global;
-        //log.includes.push("eu/ohmrun/fletcher");
-    __.test([
+        log.includes.push("stx/parse");
+        log.includes.push("stx/sys/cli");
+        log.level = TRACE;
+    __.test().run([
         //new CliParserTest(),
         new CliTest()
       ],

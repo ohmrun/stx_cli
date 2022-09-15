@@ -1,5 +1,6 @@
 package stx.sys.cli;
 
+using StringTools;
 using tink.CoreApi;
 
 using StringTools;
@@ -16,6 +17,8 @@ using stx.Fp;
 using stx.Ds;
 using stx.Parse;
 using stx.Fn;
+using stx.Coroutine;
+using stx.coroutine.Core;
 
 using stx.Log;
 using stx.ASys;

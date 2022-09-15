@@ -1,11 +1,8 @@
 package stx.sys.cli;
 
-enum CliTokenSum{  
-  Isolate(prim:Primitive);
-  Special(name:String);
-  Literal(lit:String);
-  Accessor(lit:String);
-  Suggest(name:String,double:Bool);
+enum CliTokenSum{
+  Opt(tok:String);
+  Arg(str:String);
 }
 abstract CliToken(CliTokenSum) from CliTokenSum to CliTokenSum{
   public function new(self) this = self;
@@ -15,19 +12,10 @@ abstract CliToken(CliTokenSum) from CliTokenSum to CliTokenSum{
   private var self(get,never):CliToken;
   private function get_self():CliToken return lift(this);
 
-  static public function isolate(self:Primitive){
-    return lift(Isolate(self));
+  static public function arg(self:String){
+    return lift(Arg(self));
   }
-  static public function special(self:String){
-    return lift(Special(self));
-  }
-  static public function literal(self:String){
-    return lift(Literal(self));
-  }
-  static public function accessor(self:String){
-    return lift(Literal(self));
-  }
-  static public function suggest(name:String,double:Bool){
-    return lift(Suggest(name,double));
+  static public function opt(name:String){
+    return lift(Opt(name));
   }
 }
