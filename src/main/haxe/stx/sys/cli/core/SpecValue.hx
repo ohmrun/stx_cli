@@ -1,8 +1,13 @@
 package stx.sys.cli.core;
 
-class SpecValue extends ParserCls<CliToken,SpecValue>{
+class SpecValue{
+  static public function make(spec,args,opts,rest){
+    return new SpecValue(spec,args,opts,rest);
+  }
+  static public function makeI(spec){
+    return make(spec,[],[],None);
+  }
   public function new(spec,args,opts,rest){
-    super();
     this.spec = spec;
     this.args = args;
     this.opts = opts;
@@ -29,7 +34,7 @@ class SpecValue extends ParserCls<CliToken,SpecValue>{
     return copy(null,args.snoc(x));
   }
   public function with_opt(x){
-    return copy(null,args.snoc(x));
+    return copy(null,null,opts.snoc(x));
   }
   public function get_section(name:String):Option<Spec>{
     return __.option(spec.rest[name]);
@@ -65,114 +70,15 @@ class SpecValue extends ParserCls<CliToken,SpecValue>{
   public function get_missing_arguments():Cluster<ArgumentSpec>{
     final leftover =  spec.args.filter(
       (spec) -> {
-        final is_remaining = opts.any(opt -> opt.type.name == spec.name);
+        final is_remaining = !args.any(opt -> opt.type.name == spec.name);
         if(is_remaining){
           spec.required;
         }else{
-          true;
+          false;
         } 
       }
     );
     return leftover;
   }
-  public function defer(ipt:ParseInput<CliToken>,cont:Terminal<ParseResult<CliToken,SpecValue>,Noise>){
-    return switch(ipt.head()){
-      case Some(Arg(x)) : 
-        get_section(x).fold(
-          (ok) -> {
-            final missing_options = get_missing_options();
-            return missing_options.is_defined().if_else(
-              () -> cont.receive(cont.value(ipt.no('$missing_options'))),
-              () -> {
-                final missing_arguments = get_missing_arguments();
-                return missing_arguments.is_defined().if_else(
-                  () -> cont.receive(cont.value(ipt.no('$missing_arguments'))),
-                  () -> {
-                    final sub_spec_value   = new SpecValue(ok,[],[],None);
-                    final next_spec_parser = Parsers.Anon(sub_spec_value.defer,None);
-                    return cont.receive(next_spec_parser.then(
-                      (subspec) -> {
-                        return this.with_rest(Some(subspec));
-                      }
-                    ).forward(ipt.tail()));
-                  }
-                );
-              }
-            );
-          },
-          () -> {
-            return get_arg().fold(
-              (y) -> {
-                final with_arg = this.with_arg(y.with(x));
-                return cont.receive(cont.value(ipt.ok(with_arg)));
-              },
-              () -> {
-                return cont.receive(
-                  cont.value(
-                    is_args_full().if_else(
-                      () -> ipt.no('extra argument'),
-                      () -> ipt.no('extra argument')
-                    ) 
-                  )
-                );
-              }
-            );
-          }
-        );
-      case Some(Opt(string)) : 
-        switch(args.is_defined()){
-          case true  : cont.receive(cont.value(ipt.no("no options should be defined after arguments")));
-          case false : get_opt(string).fold(
-            (opt:OptionSpecApi) -> {
-              return switch(opt.kind){
-                case PropertyKind(false) : get_opt_value(opt).fold(
-                  ok -> cont.receive(cont.value(ipt.no('${opt.name} already defined'))),
-                  () -> {
-                    final opt_val = opt.with(None);
-                    return opt_val.is_assignment().if_else(
-                      () -> cont.receive(cont.value(ipt.tail().ok(this.with_opt(opt_val)))),
-                      () -> (opt.kind == FlagKind).if_else(
-                        () -> cont.receive(cont.value(ipt.tail().ok(this.with_opt(opt_val)))),
-                        () -> switch(ipt.tail().head()){
-                          case Some(Arg(x)) : 
-                            cont.receive(cont.value(ipt.tail().tail().ok(
-                              this.with_opt(opt.with(Some(x)))
-                            )));
-                          default     : cont.receive(cont.value(ipt.no('$opt requires value')));
-                        }
-                      )
-                    );
-                  }
-                );
-                case PropertyKind(true) : 
-                  final opt_val = opt.with(None);
-                  return opt_val.is_assignment().if_else(
-                    () -> cont.receive(cont.value(ipt.tail().ok(this.with_opt(opt_val)))),
-                    () -> (opt.kind == FlagKind).if_else(
-                      () -> cont.receive(cont.value(ipt.tail().ok(this.with_opt(opt_val)))),
-                      () -> switch(ipt.tail().head()){
-                        case Some(Arg(x)) : cont.receive(cont.value(ipt.tail().tail().ok(
-                          this.with_opt(opt.with(Some(x)))
-                        )));
-                        default     : cont.receive(cont.value(ipt.no('$opt requires value')));
-                      }
-                    )
-                  );
-                case ArgumentKind : cont.receive(cont.value(ipt.no('option defined as argument',true)));
-                case FlagKind     :  
-                  get_opt_value(opt).fold(
-                    ok -> cont.receive(cont.value(ipt.no('${opt.name} already defined'))),
-                    () -> {
-                      final opt_val = opt.with(None);
-                      return cont.receive(cont.value(ipt.tail().ok(this.with_opt(opt_val))));
-                    }
-                  );
-              }
-            },
-            () -> cont.receive(cont.value(ipt.no('no option found'))) 
-          );
-        } 
-      case None : cont.receive(cont.value(ipt.ok(this)));
-    }
-  }
+  
 }

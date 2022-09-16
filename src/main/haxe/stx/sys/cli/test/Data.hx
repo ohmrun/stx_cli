@@ -14,7 +14,7 @@ class Data{
     return Spec.__.Flag('efflag',"tis a efflag");
   }
   static public function property(){
-    return Spec.__.Property('prop','is prop',false,false);
+    return Spec.__.Property('prop','is prop',true,false);
   }
   static public function property_required(){
     return Spec.__.Property('prop','is Prop',false,true,'P');

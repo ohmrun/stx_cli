@@ -8,6 +8,7 @@ interface OptionSpecApi{
 
   public function matches(str:String):Bool;
   public function with(value:Option<String>):OptionValueApi;
+  public function with_assignment(string:String):OptionValueApi;
 }
 abstract class OptionSpecCls implements OptionSpecApi{
   public final name       : String;
@@ -25,6 +26,9 @@ abstract class OptionSpecCls implements OptionSpecApi{
   
   public function with(data:Option<String>):OptionValueApi{
     return new OptionValueCls(this,data);
+  }
+  public function with_assignment(data:String):OptionValueApi{
+    return new OptionValueCls(this,__.option(data.split("=")[1]));
   }
 }
 class OptionSpecLift{

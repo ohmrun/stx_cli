@@ -7,7 +7,7 @@ typedef CliFailure          = stx.fail.CliFailure;
 
 typedef SysArgs             = stx.sys.cli.SysArgs;
 typedef Arguments           = stx.sys.cli.Arguments;
-typedef Parser              = stx.sys.cli.Parser;
+typedef CliParser           = stx.sys.cli.CliParser;
 typedef ExecutionMethod     = stx.sys.cli.ExecutionMethod;
 typedef CliContext          = stx.sys.cli.CliContext;
 typedef CliToken            = stx.sys.cli.CliToken;

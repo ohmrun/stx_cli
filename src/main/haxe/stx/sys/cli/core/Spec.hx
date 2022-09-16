@@ -10,10 +10,14 @@ class Spec extends SpecSlice{
     this.rest = rest;
   }
   public final rest      : Map<String,Spec>;
+
+  public function reply(){
+    return SpecParser.makeI(SpecValue.makeI(this));
+  }
 }
 class SpecCtr extends Clazz{
-  public function Make(name,doc,opts,args,rest:CTR<SpecCtr,Map<String,Spec>>){
-    return new Spec(name,doc,opts,args,rest.apply(this));
+  public function Make(name,doc,opts,args,rest:CTR<SpecCtr,Option<Map<String,Spec>>>){
+    return new Spec(name,doc,opts,args,rest.apply(this).defv(new Map()));
   }
   public function Property(name,doc,repeatable,required,?short){
     return new PropertyDefaultSpec(name,doc,repeatable,required);

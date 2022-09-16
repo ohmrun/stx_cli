@@ -26,9 +26,13 @@ class OptionValueCls implements OptionValueApi{
     return result;
   }
   public function is_assignment(){
-    return is_literal() ? false : data.fold(s -> s.split("=").length == 2, () -> false);
+    trace(data.fold(s -> s.split("=")[1],() -> ">?>>"));
+    return is_literal() ? false : data.fold(s -> Chars.lift(__.option(s.split("=")[1]).defv('')).is_defined(), () -> false);
   }
   public function is_of(type:OptionSpecApi){
     return this.type.name == type.name;
+  }
+  public function toString(){
+    return '${this.type.name}=${data}';
   }
 } 

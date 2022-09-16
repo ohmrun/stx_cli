@@ -25,7 +25,7 @@ class CliContext{
     return make0(__.sys().cwd().get(),SysArgs.unit());
   }
   static public inline function make0(working_directory:String,sys_args:SysArgs){
-    final method    = new Parser().parse(sys_args.as_parseable_string().reader()).convert(
+    final method    = new CliParser().parse(sys_args.as_parseable_string().reader()).convert(
       (res:ParseResult<String,Cluster<CliToken>>) -> res.toRes().map(
         arr -> arr.defv([]) 
       )

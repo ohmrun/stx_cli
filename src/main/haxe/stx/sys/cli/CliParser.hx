@@ -1,12 +1,12 @@
 package stx.sys.cli;
 
 import stx.parse.Parser in Prs;
-using stx.sys.cli.Parser;
+using stx.sys.cli.CliParser;
 
 function id(str){
   return __.parse().id(str);
 }
-class Parser{
+class CliParser{
   static public function g<T,U>(p:Prs<String,U>):Prs<String,U>{
     return Parse.gap.many()._and(p);
   }
