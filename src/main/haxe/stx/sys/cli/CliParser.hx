@@ -27,7 +27,7 @@ class CliParser{
 
   public function parse(ipt:ParseInput<String>):Provide<ParseResult<String,Cluster<CliToken>>>{
     return 
-        opt()
+        Provide.pure(opt()
         .or(arg())
         .and_(Parse.whitespace.or(Parsers.Eof()))
         .then(Option.pure)
@@ -42,7 +42,7 @@ class CliParser{
               )
             );
           }
-        ).provide(ipt);
+        ).apply(ipt));
   }
   public function opt():AbstractParser<String,Cluster<CliToken>>{
     return double_minus.and(word()).then(__.decouple((x,y) -> [Opt('$x$y')].imm())).or(
@@ -50,8 +50,8 @@ class CliParser{
         __.decouple(
           (x:String,y:String) -> {
             final incase_assignment = y.split('=');
-            final parts  = Chars.lift(incase_assignment[0]).iterator();
-            final partsI = Iter.make(parts).lfold(
+            final parts             = Chars.lift(incase_assignment[0]).iterator();
+            final partsI            = Iter.make(parts).lfold(
               (next:Chars,memo:Array<String>) -> {
                 return memo.snoc('$x$next');
               },

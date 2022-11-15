@@ -14,53 +14,36 @@ typedef CliToken            = stx.sys.cli.CliToken;
 typedef CliTokenSum         = stx.sys.cli.CliToken.CliTokenSum;
 
 typedef Executor            = stx.sys.cli.Executor;
-typedef ProgramApi          = stx.sys.cli.Program.ProgramApi;
+//typedef ProgramApi          = stx.sys.cli.Program.ProgramApi;
 typedef Program             = stx.sys.cli.Program;
 
-class Cli{
-  static public var handlers(default,never) : Queue<ProgramApi> = new Queue();
-  static public function main(){
-    final log       = __.log().global;
-          //log.includes.push('eu/ohmrun/fletcher');
-          //log.includes.push('stx/stream');
-          //log.includes.push('stx/stream/DEBUG');
-          //log.includes.push('stx/parse');
-          //log.includes.push('**');
-          //log.includes.push('**/*');
-          log.includes.push("stx/sys/cli");
-          log.includes.push('stx/io');
-          //log.includes.push('**/**/*');
-          log.level = DEBUG;
-          log.includes.push("stx/asys");
-          log.includes.push("stx/io");
-    
-    //handlers.add({ data : new stx.sys.cli.term.Command() });
-    //handlers.add({ data : new stx.sys.cli.term.Echo() });
-    var context   = stx.sys.cli.CliContext.unit();
-    
-    __.log().info(context.info());
-    var executor  = new Executor(context);
-    var result    = 
-      executor.execute()
-              .convert(process -> new stx.io.processor.term.Unit(process).reply())
-              .flat_map(
-                processor -> 
-                  processor
-                    .toOutlet()
-                    .pledge()
-                    .errate(E_Cli_ProcessFailure)
-              );
+typedef OptionSpecApi       = stx.sys.cli.program.OptionSpec.OptionSpecApi;
+typedef OptionSpecCls       = stx.sys.cli.program.OptionSpec.OptionSpecCls;
+typedef OptionSpecCtr       = stx.sys.cli.program.OptionSpec.OptionSpecCtr;
 
-        result.environment(
-          (opt)  -> {
-            for(x in opt){
-              std.Sys.print(x);
-            }
-          },
-          (e) -> {
-            __.log().debug(_ -> _.pure(e));
-            std.Sys.exit(1);
-          }
-        ).submit();
+typedef OptionValueCls      = stx.sys.cli.program.OptionValue.OptionValueCls;
+typedef OptionValueApi      = stx.sys.cli.program.OptionValue.OptionValueApi;
+
+typedef Spec                = stx.sys.cli.program.Spec;
+typedef SpecValue           = stx.sys.cli.program.SpecValue;
+
+typedef OptionKind          = stx.sys.cli.program.OptionKind;
+typedef CliConfig = {
+  final greedy : Bool;
+}
+class CliConfigCtr{
+  static public function unit():CliConfig{
+    return {
+      greedy : true
+    }
+  }
+}
+
+class Cli{
+  static public function cli(wildcard:Wildcard){
+    return new stx.sys.cli.Module();
+  }  
+  static public function main(){
+    stx.sys.cli.Run.main();
   }
 }

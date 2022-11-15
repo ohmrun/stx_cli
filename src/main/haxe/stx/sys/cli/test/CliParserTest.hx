@@ -3,7 +3,7 @@ package stx.sys.cli.test;
 class CliParserTest extends TestCase{
   public function _testParser(){
     var reader = 'abs "TEST" 1'.reader();
-    var parser = new stx.sys.cli.Parser();
+    var parser = new CliParser();
     var result = parser.parse(reader).fudge();
     trace(result);
   }

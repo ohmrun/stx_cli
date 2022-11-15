@@ -8,6 +8,7 @@ package stx.sys.cli;
     return new SysArgs(args);
   }
   private function new(?args){
+    //trace(__.sys().args().imm());
     this = __.option(args).defv(__.sys().args().imm());
   }
   public function is_haxelib_run(){

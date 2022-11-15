@@ -7,7 +7,8 @@ import stx.sys.cli.test.*;
 class Test{
   static public function tests(){
     return [
-      new CliTest()
+      new CliTest(),
+      new ParserTest()
     ];
   }
   static public function main(){

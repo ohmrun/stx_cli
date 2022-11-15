@@ -23,9 +23,9 @@
       }
     },
     "test" : {
-      "-resource" : ["tests.pml@tests"],
-      "-D" : ["stx.parse.switches.debug=false","debug"],
-      "-main" : "stx.sys.cli.Test",
+      "-resource"   : ["tests.pml@tests"],
+      "-D"          : ["stx.parse.switches.debug=false","debug"],
+      "-main"       : "stx.sys.cli.Test",
       "interp" : {
         "--interp" : true
       }

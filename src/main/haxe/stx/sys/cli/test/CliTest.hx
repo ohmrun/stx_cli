@@ -18,6 +18,7 @@ class CliTest extends TestCase{
   public function one_level_spec(){
     final d = Data;
     return Spec.__.Make(
+      CliConfigCtr.unit(),
       'main','program',
       [d.flagI()],
       [d.arg_required()],
@@ -28,23 +29,13 @@ class CliTest extends TestCase{
     final spec  = one_level_spec();
     final data  = [Arg('argval'),Opt('-f')].reader();
     final prog  = spec.reply();
-    __.ctx(
-      data,
-      (ok:ParseResult<CliToken,SpecValue>) -> {
-        trace(ok.error);
-        for(v in ok){
-          for(o in v){
-            trace(o.args);
-            trace(o.opts);
-          }
-        }
-      }
-    ).load(prog.toFletcher())
-     .crunch();
+    final res   = prog.apply(data);
+    trace(res);
   }
   public function one_level_specI(){
     final d = Data;
     return Spec.__.Make(
+      CliConfigCtr.unit(),
       "subprogram",
       "is sub program",  
       [d.flagII(),d.property()],
@@ -55,6 +46,7 @@ class CliTest extends TestCase{
   public function two_level_spec(){
     final d = Data;
     return Spec.__.Make(
+      CliConfigCtr.unit(),
       'main','program',
       [d.flagI()],
       [d.arg_required()],
@@ -67,23 +59,7 @@ class CliTest extends TestCase{
     final spec  = two_level_spec(); 
     final data  = [Opt('-f'),Arg('argval'),Arg('subprogram'),Opt('-e'),Opt('--prop'),Arg('100'),Opt('--prop=2'),Arg("69")].reader();
     final prog  = spec.reply();
-    __.ctx(
-      data,
-      (ok:ParseResult<CliToken,SpecValue>) -> {
-        trace(ok.error);
-        for(v in ok){
-          for(o in v){
-            trace(o.args);
-            trace(o.opts);
-            for(x in o.rest){
-              trace(x.args);
-              trace(x.opts);
-              trace(x.spec.doc);
-            }
-          }
-        }
-      }
-    ).load(prog.toFletcher())
-     .crunch();
+    final res   = prog.apply(data);
+    trace(res);
   }
 }

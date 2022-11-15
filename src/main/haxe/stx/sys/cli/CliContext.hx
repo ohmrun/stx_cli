@@ -21,23 +21,20 @@ class CliContext{
   public function info(){
     return '$method at $working_directory from $calling_directory with $args}';
   }
-  static public function unit():CliContext{
-    return make0(__.sys().cwd().get(),SysArgs.unit());
+  static public inline function make(working_directory,calling_directory,method,args):CliContext{
+    return new CliContext(working_directory,calling_directory,method,args);
   }
-  static public inline function make0(working_directory:String,sys_args:SysArgs){
+  static public function pull(working_directory:String,sys_args:SysArgs):Produce<CliContext,CliFailure>{
     final method    = new CliParser().parse(sys_args.as_parseable_string().reader()).convert(
       (res:ParseResult<String,Cluster<CliToken>>) -> res.toRes().map(
         arr -> arr.defv([]) 
       )
     );
-
-    var result    = method.fudge();
-    //__.log().debug(_ -> _.pure(result));
-    //$type(result);
-    var arguments = result.option().fudge();
-    return make(working_directory,sys_args.calling_directory(),sys_args.method(),arguments);
-  }
-  static public inline function make(working_directory,calling_directory,method,args):CliContext{
-    return new CliContext(working_directory,calling_directory,method,args);
+    return method.adjust(
+      res -> res.fold(
+        ok -> __.accept(make(working_directory,sys_args.calling_directory(),sys_args.method(),ok)),
+        no -> __.reject(_ -> no.errate(E_Cli_Parse))
+      )
+    );
   }
 }

@@ -1,5 +1,5 @@
 package stx.sys.cli;
 
 class CliApplication{
-  public final specification : 
+  //public final application : Res<Sp
 }
