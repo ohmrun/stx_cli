@@ -10,7 +10,7 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
   public function apply(ipt:ParseInput<CliToken>){
     __.log().trace('item ${this.delegate}');
     __.log().trace('${ipt.head()}');
-    final is_last = !delegate.rest.is_defined();
+    final is_greedy = !delegate.rest.is_defined() && delegate.spec.config.greedy;
     
     return switch(ipt.head()){
       case Val(Arg(x)) : 
@@ -45,7 +45,7 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
                 return ipt.tail().ok(with_arg);
               },
               () -> {
-                return if(is_last){
+                return if(is_greedy){
                   final arg_spec = new ArgumentSpec(x,'automatically added',false);
                   final with_arg = delegate.with_arg(arg_spec.with(x));
                   ipt.tail().ok(with_arg);
@@ -116,7 +116,7 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
                     );
                 }
               },
-              () -> if(is_last){
+              () -> if(is_greedy){
                 final opt_type = switch(ipt.tail().head()){
                   case Val(Arg(_)) : __.accept(PropertyKind(true));
                   case Val(Opt(_)) :
