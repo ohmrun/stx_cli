@@ -3,13 +3,13 @@ package stx.sys.cli;
 class Executor extends Clazz{
   public function execute(res:Res<CliContext,CliFailure>){
     return @:privateAccess (stx.sys.cli.Run.handlers.toArray().lfold(
-      (next:Program,memo:Program) -> {  
-          return memo.fn().then(
+      (next:Program,memo:Unary<Res<CliContext,CliFailure>,Agenda<CliFailure>>) -> {  
+          return memo.apply.fn().then(
             (x:Agenda<CliFailure>) -> x.error.fold(
               no -> switch(no.data){
-                case Some(EXTERIOR(E_Cli_NoImplementation))   : 
+                case Some(EXTERNAL(E_Cli_NoImplementation))   : 
                   __.log().debug(_ -> _.pure(next));
-                  next(res);
+                  next.apply(res);
                 default                                 : x;
               },
               () -> x  

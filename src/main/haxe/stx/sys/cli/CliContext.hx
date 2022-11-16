@@ -37,4 +37,7 @@ class CliContext{
       )
     );
   }
+  public function apply(spec:Spec):ParseResult<CliToken,SpecValue>{
+    return spec.reply().apply(this.args.reader());
+  }
 }

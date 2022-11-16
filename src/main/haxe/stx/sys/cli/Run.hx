@@ -1,7 +1,10 @@
 package stx.sys.cli;
 
 class Run{
-  static public var handlers(default,never) : Queue<Program> = new Queue();
+  static public var handlers(get,null) : Queue<Program>;
+  static public function get_handlers(){
+    return handlers == null ? handlers = new Queue() : handlers;
+  }
   static public function main(){
     trace("init");
     final log       = __.log().global;
