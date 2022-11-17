@@ -4,13 +4,14 @@ using stx.Nano;
 import stx.Io;
 import stx.sys.Cli;
 
-enum CliFailure{
+enum CliFailureSum{
   E_Cli(reason:String);
   E_Cli_NoInput;
   E_Cli_UnknownOption(v:CliToken);
   E_Cli_ExpectingArg(v:CliToken);
   E_Cli_NoSectionNamed(name:String);
   E_Cli_NoImplementation;
+  E_Cli_NoSpec;
   E_Cli_Options(opts:Cluster<stx.sys.cli.program.OptionSpec.OptionSpecApi>);
   E_Cli_NoHandler;
   E_Cli_ErrorCode(int:Int);
@@ -24,4 +25,17 @@ enum CliFailure{
   E_Cli_OptionExcludedBy(opt:stx.sys.cli.program.OptionSpec.OptionSpecApi,v:stx.sys.cli.program.OptionValue.OptionValueApi,tk:CliToken);
   E_Cli_NoValueFor(p:stx.sys.cli.program.OptionSpec.OptionSpecApi);
   E_Cli_Parse(e:ParseFailure);
+  E_Cli_Embed(block:Void->Void);//Use the oppurtunity to throw an Error of a supersystem
+}
+abstract CliFailure(CliFailureSum) from CliFailureSum to CliFailureSum{
+  public function new(self) this = self;
+  @:noUsing static public function lift(self:CliFailureSum):CliFailure return new CliFailure(self);
+
+  public function prj():CliFailureSum return this;
+  private var self(get,never):CliFailure;
+  private function get_self():CliFailure return lift(this);
+
+  @:from static public function fromParseFailure(self:ParseFailure){
+    return lift(E_Cli_Parse(self));
+  }
 }

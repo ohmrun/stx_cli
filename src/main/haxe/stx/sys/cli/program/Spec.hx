@@ -5,19 +5,22 @@ import stx.sys.cli.program.spec.term.FlagDefaultSpec;
 
 class Spec extends SpecSlice{
   static public var __(default,never) = new SpecCtr();
-  public function new(config,name,doc,opts,args,rest){
+  public function new(config:CliConfig,name:String,doc:String,opts:Cluster<OptionSpecApi>,args:Cluster<ArgumentSpec>,rest){
     super(config,name,doc,opts,args);
     this.rest = rest;
   }
-  public final rest      : Map<String,Spec>;
+  public final rest      : RedBlackMap<String,Spec>;
 
   public function reply(){
     return SpecParser.makeI(SpecValue.makeI(this));
   }
+  public function with_rest(fn : RedBlackMap<String,Spec> -> RedBlackMap<String,Spec>){
+    return new Spec(this.config, this.name, this.doc, this.opts, this.args, fn(this.rest));
+  }
 }
 class SpecCtr extends Clazz{
-  public function Make(config,name,doc,opts,args,rest:CTR<SpecCtr,Option<Map<String,Spec>>>){
-    return new Spec(config,name,doc,opts,args,rest.apply(this).defv(new Map()));
+  public function Make(config,name,doc,opts,args,rest:CTR<SpecCtr,Option<RedBlackMap<String,Spec>>>){
+    return new Spec(config,name,doc,opts,args,rest.apply(this).defv(RedBlackMap.make(Comparable.String())));
   }
   public function Property(name,doc,repeatable,required,?short){
     return new PropertyDefaultSpec(name,doc,repeatable,required);

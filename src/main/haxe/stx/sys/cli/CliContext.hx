@@ -8,7 +8,7 @@ class CliContext{
   public var method(default,null):ExecutionMethod;
   public var args(default,null):Arguments;
 
-  public var handlers(default,null):Queue<CliContext->Res<Program,CliFailure>>;
+  public var handlers(default,null):Queue<CliContext->Res<ProgramApi,CliFailure>>;
 
   private function new(working_directory:String,calling_directory:Option<String>,method,args){
     this.working_directory  = working_directory;
@@ -26,12 +26,12 @@ class CliContext{
   }
   static public function pull(working_directory:String,sys_args:SysArgs):Produce<CliContext,CliFailure>{
     final method    = new CliParser().parse(sys_args.as_parseable_string().reader()).convert(
-      (res:ParseResult<String,Cluster<CliToken>>) -> res.toRes().map(
+      (res:ParseResult<String,Cluster<CliToken>>) -> __.tracer()(res).toRes().map(
         arr -> arr.defv([]) 
       )
     );
     return method.adjust(
-      res -> res.fold(
+      res -> __.tracer()(res).fold(
         ok -> __.accept(make(working_directory,sys_args.calling_directory(),sys_args.method(),ok)),
         no -> __.reject(_ -> no.errate(E_Cli_Parse))
       )

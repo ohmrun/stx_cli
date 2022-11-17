@@ -50,9 +50,11 @@ class CliTest extends TestCase{
       'main','program',
       [d.flagI()],
       [d.arg_required()],
-      Some([
-        'subprogram' => one_level_specI()
-      ])
+      Some(
+        RedBlackMap.make(Comparable.String()).set(
+          'subprogram',one_level_specI()
+        )
+      )
     );
   }
   public function test_two_level_spec(){

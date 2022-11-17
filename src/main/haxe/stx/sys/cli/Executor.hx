@@ -2,8 +2,12 @@ package stx.sys.cli;
 
 class Executor extends Clazz{
   public function execute(res:Res<CliContext,CliFailure>){
+    switch(res){
+      case Accept(ok) : __.log().debug(ok.info());
+      case Reject(e)  : __.log().debug('$e');
+    }
     return @:privateAccess (stx.sys.cli.Run.handlers.toArray().lfold(
-      (next:Program,memo:Unary<Res<CliContext,CliFailure>,Agenda<CliFailure>>) -> {  
+      (next:ProgramApi,memo:Unary<Res<CliContext,CliFailure>,Agenda<CliFailure>>) -> {  
           return memo.apply.fn().then(
             (x:Agenda<CliFailure>) -> x.error.fold(
               no -> switch(no.data){

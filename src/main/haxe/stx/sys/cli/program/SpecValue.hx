@@ -37,7 +37,7 @@ class SpecValue{
     return copy(null,null,opts.snoc(x));
   }
   public function get_section(name:String):Option<Spec>{
-    return __.option(spec.rest[name]);
+    return spec.rest.get(name);
   }
   public function get_arg():Option<ArgumentSpec>{
     return this.spec.args.ldropn(this.args.length).search(x -> true);
