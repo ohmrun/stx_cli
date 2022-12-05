@@ -27,7 +27,7 @@ class CliParser{
 
   public function parse(ipt:ParseInput<String>):Provide<ParseResult<String,Cluster<CliToken>>>{
     return 
-        Provide.pure(opt()
+        Provide.pure(__.tracer()(opt()
         .or(arg())
         .and_(Parse.whitespace.or(Parsers.Eof()))
         .then(Option.pure)
@@ -42,7 +42,7 @@ class CliParser{
               )
             );
           }
-        ).apply(ipt));
+        ).apply(ipt)));
   }
   public function opt():AbstractParser<String,Cluster<CliToken>>{
     return double_minus.and(word()).then(__.decouple((x,y) -> [Opt('$x$y')].imm())).or(

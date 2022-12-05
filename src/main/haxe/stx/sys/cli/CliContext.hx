@@ -25,10 +25,12 @@ class CliContext{
     return new CliContext(working_directory,calling_directory,method,args);
   }
   static public function pull(working_directory:String,sys_args:SysArgs):Produce<CliContext,CliFailure>{
-    final method    = new CliParser().parse(sys_args.as_parseable_string().reader()).convert(
-      (res:ParseResult<String,Cluster<CliToken>>) -> __.tracer()(res).toRes().map(
-        arr -> arr.defv([]) 
-      )
+    __.log().debug('pull');
+    final method    = new CliParser().parse(sys_args.as_parseable_string().reader()).map(
+      (res:ParseResult<String,Cluster<CliToken>>) -> {
+        __.log().debug('pulling');
+        return res.toRes().map(arr -> arr.defv([]) );
+      }
     );
     return method.adjust(
       res -> __.tracer()(res).fold(

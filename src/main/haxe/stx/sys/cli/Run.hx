@@ -1,5 +1,7 @@
 package stx.sys.cli;
 
+using stx.sys.cli.Logging;
+
 class Run{
   static public var handlers(get,null) : Queue<ProgramApi>;
   static public function get_handlers(){
@@ -27,7 +29,7 @@ class Run{
     react();
   }
   static public function reply(){
-    __.log().debug('react');
+    __.log().debug('reply ${__.sys().cwd().get()} ${SysArgs.unit()}');
     final context   = stx.sys.cli.CliContext.pull(__.sys().cwd().get(),SysArgs.unit());
     final executor  = 
       Produce.lift(Fletcher.Then(
@@ -44,7 +46,7 @@ class Run{
     return executor;
   }
   static public function react(){
-    reply().environment(
+    stx.sys.cli.Run.reply().environment(
       () -> {
         __.log().info('done');
       },
