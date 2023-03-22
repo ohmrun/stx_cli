@@ -5,7 +5,7 @@
     "-lib"  : [
       "tink_priority","tink_core",
       "haxe-files",  
-      "stx_pico","stx_nano","stx_fn","stx_ds","stx_assert","stx_parse","stx_asys","stx_fp","stx_log","stx_test"
+      "stx_pico","stx_nano","stx_fn","stx_ds","stx_assert","stx_parse","stx_asys","stx_fp","stx_log"
     ],
     "unit"  : {
       "--macro" : [
@@ -23,6 +23,8 @@
       }
     },
     "test" : {
+      "-cp"         : "src/test/haxe",
+      "-lib"        : "stx_test",
       "-resource"   : ["tests.pml@tests"],
       "-D"          : ["stx.parse.switches.debug=false","debug"],
       "-main"       : "stx.sys.cli.Test",

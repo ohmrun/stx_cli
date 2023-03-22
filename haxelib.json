@@ -9,7 +9,7 @@
     
     "stx_pico"          : "",
     "stx_nano"          : "",
-    "stx_fn"            : "1.0.0",
+    "stx_fn"            : "",
     "stx_ds"            : "",
     "stx_assert"        : "",
     "stx_run"           : ""

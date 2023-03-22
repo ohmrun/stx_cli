@@ -16,12 +16,12 @@ class Run{
           //log.includes.push('stx/parse');
           //log.includes.push('**');
           //log.includes.push('**/*');
-          log.includes.push("stx/sys/cli");
-          log.includes.push('stx/io');
+          //log.includes.push("stx/sys/cli");
+          //log.includes.push('stx/io');
           //log.includes.push('**/**/*');
-          log.level = DEBUG;
-          log.includes.push("stx/asys");
-          log.includes.push("stx/io");
+          //log.level = DEBUG;
+          //log.includes.push("stx/asys");
+          //log.includes.push("stx/io");
     
     //handlers.add({ data : new stx.sys.cli.term.Command() });
     //handlers.add({ data : new stx.sys.cli.term.Echo() });
