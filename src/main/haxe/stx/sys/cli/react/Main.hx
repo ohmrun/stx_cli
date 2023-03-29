@@ -1,28 +1,36 @@
-package stx.sys.cli;
+package stx.sys.cli.react;
 
 using stx.sys.cli.Logging;
 
-class Run{
+class Main{
   static public var handlers(get,null) : Queue<ProgramApi>;
   static public function get_handlers(){
     return handlers == null ? handlers = new Queue() : handlers;
   }
   static public function main(){
     trace("main");
-    final log       = __.log().global;
-          //log.includes.push('eu/ohmrun/fletcher');
-          //log.includes.push('stx/stream');
-          //log.includes.push('stx/stream/DEBUG');
-          //log.includes.push('stx/parse');
-          //log.includes.push('**');
-          //log.includes.push('**/*');
-          //log.includes.push("stx/sys/cli");
-          //log.includes.push('stx/io');
-          //log.includes.push('**/**/*');
-          //log.level = DEBUG;
-          //log.includes.push("stx/asys");
-          //log.includes.push("stx/io");
-    
+    final LC            = __.log().logic();
+    final logic         = LC.tags([
+      //'eu/ohmrun/fletcher',
+      'stx/stream',
+      //'stx/stream/DEBUG',
+      'stx/parse',
+      //'**',
+      //'**/*',
+      "stx/sys/cli",
+      'stx/io',
+      //'**/**/*',
+      "stx/asys",
+      "stx/proxy"
+    ]).and(LC.level(TRACE));
+
+    __.logger().global().configure(
+      log -> log.with_logic(l -> {
+        final n = l.or(logic);
+        //trace(n.toString());
+        return n;
+      })
+    );
     //handlers.add({ data : new stx.sys.cli.term.Command() });
     //handlers.add({ data : new stx.sys.cli.term.Echo() });
 
@@ -41,16 +49,20 @@ class Run{
           }
         )
       )).point(
-        res -> new Executor().execute(res)
+        res -> {
+          __.log().debug('$res');
+          return new Executor().execute(res);
+        }
       );
     return executor;
   }
   static public function react(){
-    stx.sys.cli.Run.reply().environment(
+    stx.sys.cli.react.Main.reply().environment(
       () -> {
         __.log().info('done');
       },
       (e) -> {
+        __.log().fatal('$e');
         e.raise();
       }
     ).submit();

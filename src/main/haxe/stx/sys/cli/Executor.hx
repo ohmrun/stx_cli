@@ -6,18 +6,21 @@ class Executor extends Clazz{
       case Accept(ok) : __.log().debug(ok.info());
       case Reject(e)  : __.log().debug('$e');
     }
-    return @:privateAccess (stx.sys.cli.Run.handlers.toArray().lfold(
+    return @:privateAccess (stx.sys.cli.react.Main.handlers.toArray().lfold(
       (next:ProgramApi,memo:Unary<Res<CliContext,CliFailure>,Agenda<CliFailure>>) -> {  
           return memo.apply.fn().then(
-            (x:Agenda<CliFailure>) -> x.error.fold(
-              no -> switch(no.data){
-                case Some(EXTERNAL(E_Cli_NoImplementation))   : 
-                  __.log().debug(_ -> _.pure(next));
-                  next.apply(res);
-                default                                 : x;
-              },
-              () -> x  
-            )
+            (x:Agenda<CliFailure>) -> {
+              __.log().debug('${x.error}');
+              return x.error.fold(
+                no -> switch(no.data){
+                  case Some(EXTERNAL(E_Cli_NoImplementation))   : 
+                    __.log().debug(_ -> _.pure(next));
+                    next.apply(res);
+                  default                                 : x;
+                },
+                () -> x  
+              );
+            }
           );
         },
         x -> Agenda.lift(__.ended(End(__.fault().of(E_Cli_NoImplementation))))

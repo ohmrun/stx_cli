@@ -16,14 +16,18 @@ static public function tests(){
     ];
   }
   static public function main(){
-    var log = __.log().global;
-      // .with_logic(
-      //   l -> l.pack("stx/parse").or("")
-      // )
-        //log.includes.push("stx/parse");
-        //log.includes.push("stx/sys/cli");
-        //log.includes.push("**/*");
-        //log.level = TRACE;
+    var lX  = __.log().logic();
+    __.logger().global().configure(
+      logger -> logger.with_logic(
+        lg -> lg.or(
+          lX.Tags([
+            "**/*"
+          ]).and(
+            lX.level(DEBUG)
+          )
+        )
+      )
+    );
     __.test().auto();
   }
 }

@@ -32,23 +32,33 @@ class CliParser{
   public function new(){}
 
   public function parse(ipt:ParseInput<String>):Provide<ParseResult<String,Cluster<CliToken>>>{
+    trace('parse');
     return 
-        Provide.pure((opt()
-        .or(arg())
-        .and_(Parse.whitespace.or(Parsers.Eof()))
-        .then(Option.pure)
-        .one_many()
-        .then(
-          (arr) -> {
-            __.log().debug(_ -> _.pure(arr));
-            return arr.flat_map(
-              opt -> opt.fold(
-                x -> x,
-                () -> [].imm()
-              )
-            );
-          }
-        ).apply(ipt)));
+        Provide.pure(
+          (
+            opt()
+              .or(arg())
+              .and_(Parse.whitespace.or(Parsers.Eof()))
+              .then(Option.pure)
+              .one_many()
+              .then(
+                (arr) -> {
+                  __.log().debug(_ -> _.pure(arr));
+                  return arr.flat_map(
+                    opt -> opt.fold(
+                      x -> x,
+                      () -> [].imm()
+                    )
+                  );
+                }
+              ).apply(ipt)
+          )
+        ).map(
+            (x) -> {
+              __.log().debug('$x');
+              return x;
+            }
+        );
   }
   static public function opt():AbstractParser<String,Cluster<CliToken>>{
     return double_minus.and(word()).then(__.decouple((x,y) -> [Opt('$x$y')].imm())).or(

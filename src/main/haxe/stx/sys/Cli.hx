@@ -46,6 +46,6 @@ class Cli{
     return new stx.sys.cli.Module();
   }  
   static public function main(){
-    stx.sys.cli.Run.main();
+    stx.sys.cli.react.Main.main();
   }
 }
