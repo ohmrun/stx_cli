@@ -11,3 +11,15 @@
       "stx.sys.cli.test.ParserTest"
     )
 )
+(
+  "sys_parser"
+    include (
+      "stx.sys.cli.test.SysCliParserTest"
+    )
+)
+(
+  "readme"
+    include (
+      "stx.sys.cli.test.ReadmeTest"
+    )
+)

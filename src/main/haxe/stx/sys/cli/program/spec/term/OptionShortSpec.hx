@@ -8,7 +8,7 @@ class OptionShortSpec implements OptionSpecApi extends OptionSpecCls{
   }
   public function matches(string:String):Bool{
     final incase = string.split("=");
-    trace('${incase[0]} == -${short}');
+    __.log().trace('${incase[0]} == -${short}');
     return incase[0] == '-$short';
   }
 }

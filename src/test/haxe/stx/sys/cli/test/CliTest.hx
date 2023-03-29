@@ -21,8 +21,7 @@ class CliTest extends TestCase{
       CliConfigCtr.unit(),
       'main','program',
       [d.flagI()],
-      [d.arg_required()],
-      None
+      [d.arg_required()]
     );
   }
   public function test_one_level_spec(){
@@ -39,8 +38,7 @@ class CliTest extends TestCase{
       "subprogram",
       "is sub program",  
       [d.flagII(),d.property()],
-      [d.arg_required()], 
-      None
+      [d.arg_required()]
     ); 
   }
   public function two_level_spec(){
@@ -50,11 +48,9 @@ class CliTest extends TestCase{
       'main','program',
       [d.flagI()],
       [d.arg_required()],
-      Some(
-        RedBlackMap.make(Comparable.String()).set(
-          'subprogram',one_level_specI()
-        )
-      )
+      [
+        'subprogram' => one_level_specI()
+      ]
     );
   }
   public function test_two_level_spec(){

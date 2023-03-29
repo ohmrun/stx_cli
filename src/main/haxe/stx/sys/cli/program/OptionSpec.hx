@@ -1,13 +1,44 @@
 package stx.sys.cli.program;
 
+/**
+ * Base description of any type of Cli token
+ */
 interface OptionSpecApi{
+  /**
+   * What name is this token given. Note this migh t be different from what it matches
+   */
   public final name       : String;
+  /**
+   * What is the use of this token in the program
+   */
   public final doc        : String;
+  /**
+   * @see stx.sys.cli.program.OptionKind
+   */
   public final kind       : OptionKind;
+  /**
+   * Parsing fails if it is not defined.
+   */
   public final required   : Bool;
 
+  /**
+   * Definition to use in the SpecParser to identify this token.
+   * @param str 
+   * @return Bool
+   */
   public function matches(str:String):Bool;
+
+  /**
+   * Convenience function to create OptionValue
+   * @param value 
+   * @return OptionValueApi
+   */
   public function with(value:Option<String>):OptionValueApi;
+  /**
+   * As `with` but splits the string over an `=` sign to create a `Property`
+   * @param string 
+   * @return OptionValueApi
+   */
   public function with_assignment(string:String):OptionValueApi;
 }
 abstract class OptionSpecCls implements OptionSpecApi{

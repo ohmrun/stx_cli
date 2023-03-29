@@ -127,7 +127,22 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
                     }else{
                       __.accept(FlagKind);
                     }
-                  default : __.reject(f -> f.of(E_Cli('Incorrect value')));
+                  case End(e) :
+                    switch(e.data){
+                      case Some(EXTERNAL(stx.fail.ParseFailureCode.ParseFailureCodeSum.E_Parse_Eof)) : 
+                        __.reject(f -> f.of(E_Cli_Parse(
+                          ParseFailure.make(
+                            @:privateAccess ipt.tail().content.index,
+                            stx.fail.ParseFailureCode.ParseFailureCodeSum.E_Parse_Eof,
+                            false
+                          )
+                        )));
+                      case x : 
+                        __.reject(f -> f.of(E_Cli('$x')));
+                    }
+                  case x : 
+                    __.log().error('$x');
+                    __.reject(f -> f.of(E_Cli('Incorrect value')));
                 }
                 switch(opt_type){
                   case Accept(PropertyKind(_)) : 
@@ -146,7 +161,20 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
                   case Accept(FlagKind) : 
                     final opt      = new stx.sys.cli.program.spec.term.PropertyWildcard(string,'auto property',FlagKind,false); 
                     ipt.tail().ok(delegate.with_opt(opt.with(None)));
-                  default : 
+                  case Reject(e)        : 
+                    switch(e.data){
+                      case Some(EXTERNAL(E_Cli_Parse(eI))) : 
+                        ParseResult.make(
+                          ipt.tail(),
+                          None,
+                          Refuse.make(Some(EXTERNAL(eI)),None,e.pos)
+                        );
+                      default                   :
+                        __.log().fatal(_ -> _.thunk(() -> '$e'));
+                        ipt.no('weird condition error'); 
+                    }
+                  case x : 
+                    __.log().fatal(_ -> _.thunk(() -> '$x'));
                     ipt.no('weird condition error');
                 }
               }else{

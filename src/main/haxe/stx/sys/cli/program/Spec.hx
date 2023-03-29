@@ -19,8 +19,12 @@ class Spec extends SpecSlice{
   }
 }
 class SpecCtr extends Clazz{
-  public function Make(config,name,doc,opts,args,rest:CTR<SpecCtr,Option<RedBlackMap<String,Spec>>>){
-    return new Spec(config,name,doc,opts,args,rest.apply(this).defv(RedBlackMap.make(Comparable.String())));
+  public function Make(config,name,doc,opts,args,?rest:Null<CTR<SpecCtr,Map<String,Spec>>>){
+    final r   = __.option(rest).map(x-> x.apply(this)).defv(new StringMap());
+    final rI  = RedBlackMap.make(Comparable.String()).concat(
+      r.toIterKV().toIter()
+    );
+    return new Spec(config,name,doc,opts,args,rI);
   }
   public function Property(name,doc,repeatable,required,?short){
     return new PropertyDefaultSpec(name,doc,repeatable,required);
@@ -31,4 +35,8 @@ class SpecCtr extends Clazz{
   public function Argument(name:String,doc:String,required:Bool){
     return new ArgumentSpec(name,doc,required);
   }
+  public function Config(){
+    return CliConfigCtr;
+  }
+
 }

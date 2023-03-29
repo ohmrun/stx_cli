@@ -1,0 +1,21 @@
+-main stx.sys.cli.Test
+-cp src/main/haxe
+-cp src/test/haxe
+-lib tink_priority
+-lib tink_core
+-lib haxe-files
+-lib stx_pico
+-lib stx_nano
+-lib stx_fn
+-lib stx_ds
+-lib stx_assert
+-lib stx_parse
+-lib stx_asys
+-lib stx_fp
+-lib stx_log
+-lib stx_test
+-D no-deprecation-warnings
+-D stx.parse.switches.debug=false
+-D debug
+-resource tests.pml@tests
+--interp
