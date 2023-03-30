@@ -12,18 +12,18 @@ enum CliFailureSum{
   E_Cli_NoSectionNamed(name:String);
   E_Cli_NoImplementation;
   E_Cli_NoSpec;
-  E_Cli_Options(opts:Cluster<stx.sys.cli.program.OptionSpec.OptionSpecApi>);
+  E_Cli_Options(opts:Cluster<stx.sys.cli.application.spec.OptionSpec.OptionSpecApi>);
   E_Cli_NoHandler;
   E_Cli_ErrorCode(int:Int);
   E_Cli_CannotFindClass(string:String);
   E_Cli_CommandShouldBeAccessor(cmd:CliToken);
   E_Cli_Io(f:IoFailure);
   E_Cli_ProcessFailure(e:ProcessFailure);
-  E_Cli_Spec(spec:stx.sys.cli.program.Spec);
-  E_Cli_ArgumentSpec(spec:stx.sys.cli.program.spec.term.ArgumentSpec);
+  E_Cli_Spec(spec:stx.sys.cli.application.Spec);
+  E_Cli_ArgumentSpec(spec:stx.sys.cli.application.spec.term.ArgumentSpec);
   E_Cli_Reason(f:CliFailure,reason:String);
-  E_Cli_OptionExcludedBy(opt:stx.sys.cli.program.OptionSpec.OptionSpecApi,v:stx.sys.cli.program.OptionValue.OptionValueApi,tk:CliToken);
-  E_Cli_NoValueFor(p:stx.sys.cli.program.OptionSpec.OptionSpecApi);
+  E_Cli_OptionExcludedBy(opt:stx.sys.cli.application.spec.OptionSpec.OptionSpecApi,v:stx.sys.cli.application.spec.OptionValue.OptionValueApi,tk:CliToken);
+  E_Cli_NoValueFor(p:stx.sys.cli.application.spec.OptionSpec.OptionSpecApi);
   E_Cli_Parse(e:ParseFailure);
   E_Cli_Embed(block:Void->Void);//Use the oppurtunity to throw an Error of a supersystem
 }

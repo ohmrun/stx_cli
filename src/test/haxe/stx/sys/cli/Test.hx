@@ -20,7 +20,7 @@ static public function tests(){
     __.logger().global().configure(
       logger -> logger.with_logic(
         lg -> lg.or(
-          lX.Tags([
+          lX.tags([
             "**/*"
           ]).and(
             lX.level(DEBUG)

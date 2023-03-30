@@ -1,4 +1,4 @@
-package stx.sys.cli.program.spec.term;
+package stx.sys.cli.application.spec.term;
 
 class FlagDefaultSpec extends FlagLongAndShortSpec{
   public function new(name:String,doc:String,?short){

@@ -1,4 +1,4 @@
-package stx.sys.cli.program.spec.term;
+package stx.sys.cli.application.spec.term;
 
 class PropertyShortSpec implements OptionSpecApi extends OptionSpecCls{
   public final short : String;

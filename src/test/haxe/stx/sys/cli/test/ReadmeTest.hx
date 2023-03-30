@@ -27,7 +27,7 @@ class ReadmeTest extends TestCase{
           ) 
         ]
     );
-    final val : Res<Option<stx.sys.cli.program.SpecValue>,CliFailure> = __.cli().apply(spec);//uses Sys.args() as input
+    final val : Res<Option<stx.sys.cli.application.spec.SpecValue>,CliFailure> = __.cli().apply(spec);//uses Sys.args() as input
     trace(val);
   }
 }

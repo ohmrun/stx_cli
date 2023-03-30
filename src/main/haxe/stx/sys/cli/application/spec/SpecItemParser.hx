@@ -1,4 +1,4 @@
-package stx.sys.cli.program;
+package stx.sys.cli.application.spec;
 
 class SpecItemParser extends ParserCls<CliToken,SpecValue>{
   public final delegate : SpecValue;
@@ -120,7 +120,7 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
                 final opt_type = switch(ipt.tail().head()){
                   case Val(Arg(_)) : __.accept(PropertyKind(true));
                   case Val(Opt(_)) :
-                    final opt      = new stx.sys.cli.program.spec.term.PropertyWildcard(string,'auto property',PropertyKind(true),false); 
+                    final opt      = new stx.sys.cli.application.spec.term.PropertyWildcard(string,'auto property',PropertyKind(true),false); 
                     final opt_val = opt.with(Some(string));
                     if(opt_val.is_assignment()){
                       __.accept(PropertyKind(true));
@@ -146,7 +146,7 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
                 }
                 switch(opt_type){
                   case Accept(PropertyKind(_)) : 
-                    final opt      = new stx.sys.cli.program.spec.term.PropertyWildcard(string,'auto property',PropertyKind(true),false); 
+                    final opt      = new stx.sys.cli.application.spec.term.PropertyWildcard(string,'auto property',PropertyKind(true),false); 
                     final opt_val = opt.with(None);
                     opt_val.is_assignment().if_else(
                       () -> ipt.tail().ok(delegate.with_opt(opt_val)),
@@ -159,7 +159,7 @@ class SpecItemParser extends ParserCls<CliToken,SpecValue>{
                       }
                     );
                   case Accept(FlagKind) : 
-                    final opt      = new stx.sys.cli.program.spec.term.PropertyWildcard(string,'auto property',FlagKind,false); 
+                    final opt      = new stx.sys.cli.application.spec.term.PropertyWildcard(string,'auto property',FlagKind,false); 
                     ipt.tail().ok(delegate.with_opt(opt.with(None)));
                   case Reject(e)        : 
                     switch(e.data){

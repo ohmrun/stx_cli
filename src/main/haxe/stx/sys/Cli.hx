@@ -19,17 +19,17 @@ typedef Executor            = stx.sys.cli.Executor;
 typedef ProgramApi          = stx.sys.cli.ProgramApi;
 typedef ProgramCls          = stx.sys.cli.ProgramCls;
 
-typedef OptionSpecApi       = stx.sys.cli.program.OptionSpec.OptionSpecApi;
-typedef OptionSpecCls       = stx.sys.cli.program.OptionSpec.OptionSpecCls;
-typedef OptionSpecCtr       = stx.sys.cli.program.OptionSpec.OptionSpecCtr;
+typedef OptionSpecApi       = stx.sys.cli.application.spec.OptionSpec.OptionSpecApi;
+typedef OptionSpecCls       = stx.sys.cli.application.spec.OptionSpec.OptionSpecCls;
+typedef OptionSpecCtr       = stx.sys.cli.application.spec.OptionSpec.OptionSpecCtr;
 
-typedef OptionValueCls      = stx.sys.cli.program.OptionValue.OptionValueCls;
-typedef OptionValueApi      = stx.sys.cli.program.OptionValue.OptionValueApi;
+typedef OptionValueCls      = stx.sys.cli.application.spec.OptionValue.OptionValueCls;
+typedef OptionValueApi      = stx.sys.cli.application.spec.OptionValue.OptionValueApi;
 
-typedef Spec                = stx.sys.cli.program.Spec;
-typedef SpecValue           = stx.sys.cli.program.SpecValue;
+typedef Spec                = stx.sys.cli.application.Spec;
+typedef SpecValue           = stx.sys.cli.application.spec.SpecValue;
 
-typedef OptionKind          = stx.sys.cli.program.OptionKind;
+typedef OptionKind          = stx.sys.cli.application.spec.OptionKind;
 typedef CliConfig = {
   final greedy : Bool;
 }

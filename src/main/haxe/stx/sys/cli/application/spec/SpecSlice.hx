@@ -1,4 +1,4 @@
-package stx.sys.cli.program;
+package stx.sys.cli.application.spec;
 
 class SpecSlice{
   public function new(config:CliConfig,name:String,doc:String,opts:Cluster<OptionSpecApi>,args:Cluster<ArgumentSpec>){

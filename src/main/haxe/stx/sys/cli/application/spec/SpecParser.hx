@@ -1,4 +1,4 @@
-package stx.sys.cli.program;
+package stx.sys.cli.application.spec;
 
 class SpecParser extends stx.parse.parser.term.FlatMap<CliToken,SpecValue,SpecValue>{
   static public function makeI(spec_value){

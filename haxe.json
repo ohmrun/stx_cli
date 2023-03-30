@@ -40,6 +40,9 @@
     }
   },
   "run" : {
-    "run" : ["neko main.n a b"]
+    "test_run" : [
+      ["hx","build","run"],
+      ["neko","main.n","something","-a=1","better","--best"]
+    ]
   }
 }

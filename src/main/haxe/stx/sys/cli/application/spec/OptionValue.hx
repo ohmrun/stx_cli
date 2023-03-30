@@ -1,4 +1,4 @@
-package stx.sys.cli.program;
+package stx.sys.cli.application.spec;
 
 interface OptionValueApi {
   public function is_assignment()     : Bool;

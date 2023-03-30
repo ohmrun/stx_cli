@@ -1,7 +1,7 @@
-package stx.sys.cli.program;
+package stx.sys.cli.application;
 
-import stx.sys.cli.program.spec.term.PropertyDefaultSpec;
-import stx.sys.cli.program.spec.term.FlagDefaultSpec;
+import stx.sys.cli.application.spec.term.PropertyDefaultSpec;
+import stx.sys.cli.application.spec.term.FlagDefaultSpec;
 
 class Spec extends SpecSlice{
   static public var __(default,never) = new SpecCtr();
@@ -11,7 +11,7 @@ class Spec extends SpecSlice{
   }
   public final rest      : RedBlackMap<String,Spec>;
 
-  public function reply(){
+public function reply(){
     return SpecParser.makeI(SpecValue.makeI(this));
   }
   public function with_rest(fn : RedBlackMap<String,Spec> -> RedBlackMap<String,Spec>){

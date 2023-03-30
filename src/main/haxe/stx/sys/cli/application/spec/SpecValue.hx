@@ -1,4 +1,4 @@
-package stx.sys.cli.program;
+package stx.sys.cli.application.spec;
 
 class SpecValue{
   static public function make(spec,args,opts,rest){

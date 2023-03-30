@@ -33,13 +33,13 @@ Cli Parser for Haxe.
           ) 
         ]
     );
-    final val : stx.sys.cli.program.SpecValue = __.cli().apply(spec);//uses Sys.args() as input
+    final val : stx.sys.cli.application.SpecValue = __.cli().apply(spec);//uses Sys.args() as input
   }
 ```
 
 Generates a `SpecValue` based on a `Spec`.
 
-Common shortcuts in `stx.sys.cli.program.Spec.SpecCtr`
+Common shortcuts in `stx.sys.cli.application.Spec.SpecCtr`
 
 Can specify optional or required `Arguments` or `Options` 
 

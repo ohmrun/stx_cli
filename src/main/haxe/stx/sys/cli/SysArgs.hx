@@ -29,17 +29,6 @@ package stx.sys.cli;
       () -> None
     );
   }
-  public function as_parseable_string(){
-    return args_not_including_call_directory().map(
-      (str:String) -> (str.contains(" ") || str.contains(" ") || str.contains("\n")).if_else(
-        () -> (!StringTools.startsWith(str,'"')).if_else(
-          () -> '"$str"',
-          () -> str
-        ),
-        () -> str
-      )
-    ).join("");
-  }  
   public function prj():Cluster<Dynamic>{
     return this;
   }

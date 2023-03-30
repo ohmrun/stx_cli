@@ -1,4 +1,4 @@
-package stx.sys.cli.program;
+package stx.sys.cli.application.spec;
 
 /**
  * Base description of any type of Cli token
@@ -9,11 +9,11 @@ interface OptionSpecApi{
    */
   public final name       : String;
   /**
-   * What is the use of this token in the program
+   * What is the use of this token in the application
    */
   public final doc        : String;
   /**
-   * @see stx.sys.cli.program.OptionKind
+   * @see stx.sys.cli.application.OptionKind
    */
   public final kind       : OptionKind;
   /**

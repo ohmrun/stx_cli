@@ -1,4 +1,4 @@
-package stx.sys.cli.program.spec.term;
+package stx.sys.cli.application.spec.term;
 
 class PropertyDefaultSpec extends PropertyLongAndShortSpec{
   public function new(name,doc,repeatable,required,?short){
