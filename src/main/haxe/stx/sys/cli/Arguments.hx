@@ -15,4 +15,8 @@ package stx.sys.cli;
   public function prj():Cluster<CliToken> return this;
   private var self(get,never):Arguments;
   private function get_self():Arguments return lift(this);
+
+  public function reader(){
+    return stx.parse.core.Enumerable.array(this.prj());
+  }
 }
