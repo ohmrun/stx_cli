@@ -10,27 +10,27 @@ class Main{
   static public function main(){
     trace("main");
     final LC            = __.log().logic();
-    final logic         = LC.tags([
-      //'eu/ohmrun/fletcher',
-      //'stx/stream',
-      //'stx/stream/DEBUG',
-      //'stx/parse',
-      //'**',
-      //'**/*',
-      "stx/sys/cli",
-      //'stx/io',
-      //'**/**/*',
-      //"stx/asys",
-      //"stx/proxy"
-    ]).and(LC.level(TRACE));
+    // final logic         = LC.tags([
+    //   //'eu/ohmrun/fletcher',
+    //   //'stx/stream',
+    //   //'stx/stream/DEBUG',
+    //   //'stx/parse',
+    //   //'**',
+    //   //'**/*',
+    //   "stx/sys/cli",
+    //   //'stx/io',
+    //   //'**/**/*',
+    //   //"stx/asys",
+    //   //"stx/proxy"
+    // ]).and(LC.level(TRACE));
 
-    __.logger().global().configure(
-      log -> log.with_logic(l -> {
-        final n = l.or(logic);
-        //trace(n.toString());
-        return n;
-      })
-    );
+    // __.logger().global().configure(
+    //   log -> log.with_logic(l -> {
+    //     final n = l.or(logic);
+    //     //trace(n.toString());
+    //     return n;
+    //   })
+    // );
     //handlers.add({ data : new stx.sys.cli.term.Command() });
     //handlers.add({ data : new stx.sys.cli.term.Echo() });
 
