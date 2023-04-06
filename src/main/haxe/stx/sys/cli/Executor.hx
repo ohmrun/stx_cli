@@ -8,6 +8,7 @@ class Executor extends Clazz{
     }
     return @:privateAccess (stx.sys.cli.react.Main.handlers.toArray().lfold(
       (next:ProgramApi,memo:Unary<Res<CliContext,CliFailure>,Agenda<CliFailure>>) -> {  
+        __.log().trace('$next');
           return memo.apply.fn().then(
             (x:Agenda<CliFailure>) -> {
               __.log().debug('${x.error}');

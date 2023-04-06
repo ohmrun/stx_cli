@@ -12,16 +12,16 @@ class Main{
     final LC            = __.log().logic();
     final logic         = LC.tags([
       //'eu/ohmrun/fletcher',
-      'stx/stream',
+      //'stx/stream',
       //'stx/stream/DEBUG',
-      'stx/parse',
+      //'stx/parse',
       //'**',
       //'**/*',
       "stx/sys/cli",
-      'stx/io',
+      //'stx/io',
       //'**/**/*',
-      "stx/asys",
-      "stx/proxy"
+      //"stx/asys",
+      //"stx/proxy"
     ]).and(LC.level(TRACE));
 
     __.logger().global().configure(
