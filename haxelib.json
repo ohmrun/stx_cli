@@ -11,7 +11,9 @@
     "stx_nano"          : "",
     "stx_fn"            : "",
     "stx_ds"            : "",
-    "stx_assert"        : ""
+    "stx_assert"        : "",
+    "stx_parse"         : "",
+    "stx_asys"          : ""
   },
   "contributors": ["0b1kn00b"],
   "license": "MIT",
