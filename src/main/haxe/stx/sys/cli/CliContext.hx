@@ -8,15 +8,16 @@ class CliContext{
   public var method(default,null):ExecutionMethod;
   public var args(default,null):Arguments;
 
-  public var handlers(default,null):Queue<ApplicationApi>;
+//  public var handlers(default,null):Queue<ApplicationApi>;
 
   private function new(working_directory:String,calling_directory:Option<String>,method,args){
+    __.log().debug('new CliContext');
     this.working_directory  = working_directory;
     this.calling_directory  = calling_directory;
     this.method             = method;
     this.args               = args;
 
-    this.handlers           = new Queue();
+  //  this.handlers           = new Queue();
   }
   public function info(){
     return '$method at $working_directory from $calling_directory with $args}';
