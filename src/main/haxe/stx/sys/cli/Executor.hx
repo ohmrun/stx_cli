@@ -1,13 +1,13 @@
 package stx.sys.cli;
 
 class Executor extends Clazz{
-  public function execute(res:Res<CliContext,CliFailure>){
+  public function execute(res:Upshot<CliContext,CliFailure>){
     switch(res){
       case Accept(ok) : __.log().debug(ok.info());
       case Reject(e)  : __.log().debug('$e');
     }
     return @:privateAccess (stx.sys.cli.react.Main.handlers.toArray().lfold(
-      (next:ProgramApi,memo:Unary<Res<CliContext,CliFailure>,Agenda<CliFailure>>) -> {  
+      (next:ProgramApi,memo:Unary<Upshot<CliContext,CliFailure>,Agenda<CliFailure>>) -> {  
         __.log().trace('$next');
           return memo.apply.fn().then(
             (x:Agenda<CliFailure>) -> {

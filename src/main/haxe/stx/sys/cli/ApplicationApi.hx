@@ -1,5 +1,5 @@
 package stx.sys.cli;
 
-interface ApplicationApi extends ApplyApi<CliContext,Res<ProgramApi,CliFailure>>{
+interface ApplicationApi extends ApplyApi<CliContext,Upshot<ProgramApi,CliFailure>>{
 
 }

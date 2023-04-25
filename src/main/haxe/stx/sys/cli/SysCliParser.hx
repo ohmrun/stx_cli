@@ -11,7 +11,7 @@ class SysCliParser{
     return apply(args());
   }
   static public function apply(args:Cluster<String>){
-    return (parse(args).toRes().fold(
+    return (parse(args).toUpshot().fold(
       x   -> __.accept(x.fold(cls -> cls,() -> Cluster.unit())), 
       er  -> __.reject(er.errate(e -> E_Cli_Parse(e)))
     ));

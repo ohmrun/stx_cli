@@ -1,7 +1,7 @@
 package stx.sys.program.term;
 
 class Base implements ProgramApi{
-  public function apply(value:Res<CliContext,CliFailure>):Agenda<CliFailure>{
+  public function apply(value:Upshot<CliContext,CliFailure>):Agenda<CliFailure>{
     
   }
 }

@@ -1,3 +1,3 @@
 package stx.sys.cli;
 
-typedef ProgramCls = ApplyCls<Res<CliContext,CliFailure>,Agenda<CliFailure>>;
+typedef ProgramCls = ApplyCls<Upshot<CliContext,CliFailure>,Agenda<CliFailure>>;

@@ -11,7 +11,7 @@ class CliTest extends TestCase{
   //   __.ctx(
   //     Noise,
   //     (a:ParseResult<String,Dynamic>) -> {
-  //       trace(a.toRes());
+  //       trace(a.toUpshot());
   //     }
   //   ).load(v.toFletcher()).crunch();
   //}
