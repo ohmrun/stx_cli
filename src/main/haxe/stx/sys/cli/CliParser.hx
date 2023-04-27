@@ -20,7 +20,7 @@ class CliParser{
   static public inline function eof<I,O>():AbstractParser<String,O> return g(stx.parse.Parsers.Eof());
 
   static public var literal       = SParse.literal.tagged('literal');
-  static public var symbol        = SParse.symbol.tagged('literal');
+  static public var symbol        = SParse.symbol.tagged('symbol');
 
   static public function word(){
     return literal.or(symbol);
