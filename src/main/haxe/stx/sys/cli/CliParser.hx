@@ -67,8 +67,8 @@ class CliParser{
         __.decouple(
           (x:String,y:String) -> {
             final incase_assignment = y.split('=');
-            final parts             = Chars.lift(incase_assignment[0]).iterator();
-            final partsI            = Iter.make(parts).lfold(
+            final parts             = Chars.lift(incase_assignment[0]).toIter();
+            final partsI            = parts.lfold(
               (next:Chars,memo:Array<String>) -> {
                 return memo.snoc('$x$next');
               },

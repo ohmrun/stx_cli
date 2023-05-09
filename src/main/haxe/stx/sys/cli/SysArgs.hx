@@ -9,10 +9,10 @@ package stx.sys.cli;
   }
   private function new(?args){
     //trace(__.sys().args().imm());
-    this = __.option(args).defv(__.sys().args().imm());
+    this = __.option(args).defv(Sys.args().imm());
   }
   public function is_haxelib_run(){
-    return __.sys().env("HAXELIB_RUN") == "1";
+    return Sys.env("HAXELIB_RUN") == "1";
   }
   public function method(){
     return is_haxelib_run() ? ExecutingHaxelibRun : ExecutingScript;

@@ -4,7 +4,6 @@
     "-cp"   : ["src/main/haxe"],
     "-lib"  : [
       "tink_priority","tink_core","tink_runloop",
-      "haxe-files",  
       "stx_pico","stx_nano","stx_fn","stx_ds","stx_assert","stx_parse","stx_asys","stx_fp","stx_log","stx_stream"
     ],
     "unit"  : {
