@@ -12,6 +12,7 @@ enum CliFailureSum{
   E_Cli_NoSectionNamed(name:String);
   E_Cli_NoImplementation;
   E_Cli_NoSpec;
+  E_Cli_NoSpecValue;
   E_Cli_Options(opts:Cluster<stx.sys.cli.application.spec.OptionSpec.OptionSpecApi>);
   E_Cli_NoHandler;
   E_Cli_ErrorCode(int:Int);

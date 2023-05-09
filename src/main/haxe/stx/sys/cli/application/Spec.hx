@@ -35,6 +35,9 @@ class SpecCtr extends Clazz{
   public function Argument(name:String,doc:String,required:Bool){
     return new ArgumentSpec(name,doc,required);
   }
+  /**
+   * Default Constructor
+   */
   public function Config(){
     return CliConfigCtr;
   }

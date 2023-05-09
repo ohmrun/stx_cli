@@ -30,7 +30,14 @@ typedef Spec                = stx.sys.cli.application.Spec;
 typedef SpecValue           = stx.sys.cli.application.spec.SpecValue;
 
 typedef OptionKind          = stx.sys.cli.application.spec.OptionKind;
+
+/**
+ * 
+ */
 typedef CliConfig = {
+  /**
+   * Final layer will eat the rest of the input
+   */
   final greedy : Bool;
 }
 class CliConfigCtr{
