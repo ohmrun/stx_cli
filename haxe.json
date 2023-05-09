@@ -52,13 +52,6 @@
   },
   "run" : {
     "seq":[["if", ["==", ["hx","build",[0]], 0], ["hx","build",[1]], ["exit",-999]]],
-    "test_run" : [
-      [
-        "seq",
-        ["build","run"],
-        ["neko","main.n","something","-a=1","better","--best"]
-      ]
-    ],
     "units" : [
       [
         ["seq", "unit/sys/interp","unit/event/javascript"]
