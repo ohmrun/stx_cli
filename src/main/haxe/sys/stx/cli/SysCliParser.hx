@@ -1,4 +1,4 @@
-package stx.sys.cli;
+package sys.stx.cli;
 
 /**
  * Parser designed to pull a cluster of `CliToken`s from `Sys.args`

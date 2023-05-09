@@ -1,4 +1,4 @@
-package stx.sys.cli.test;
+package sys.stx.cli.test;
 
 class CliParserTest extends TestCase{
   public function _testParser(){

@@ -1,4 +1,4 @@
-package stx.sys.cli;
+package sys.stx.cli;
 
 using StringTools;
 using tink.CoreApi;
@@ -29,4 +29,4 @@ using stx.Proxy;
 using eu.ohmrun.Fletcher;
 
 using stx.Io;
-using stx.sys.Cli;
+using sys.stx.Cli;

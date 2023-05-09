@@ -1,9 +1,9 @@
-package stx.sys.cli.test;
+package sys.stx.cli.test;
 
-import stx.sys.cli.CliParser in P;
+import sys.stx.cli.CliParser in P;
 
 class CliTest extends TestCase{
-  // final p = new stx.sys.cli.Parser();
+  // final p = new sys.stx.cli.Parser();
 
   //public function test(){
   //   final a = "test --axs --bbg 'quoted' 'quoted spaced' 'quoted spaced \\' escaped '".reader();

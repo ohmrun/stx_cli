@@ -1,12 +1,23 @@
 package stx.fail;
 
 using stx.Nano;
+using stx.sys.Cli;
+
 import stx.Io;
-import stx.sys.Cli;
+import stx.fail.ProcessFailure;
 
 enum CliFailureSum{
+  /**
+   * RYO error
+   */
   E_Cli(reason:String);
+  /**
+   * Empty `Sys.args(`
+   */
   E_Cli_NoInput;
+  /**
+   * 
+   */
   E_Cli_UnknownOption(v:CliToken);
   E_Cli_ExpectingArg(v:CliToken);
   E_Cli_NoSectionNamed(name:String);
@@ -22,10 +33,16 @@ enum CliFailureSum{
   E_Cli_ProcessFailure(e:ProcessFailure);
   E_Cli_Spec(spec:stx.sys.cli.application.Spec);
   E_Cli_ArgumentSpec(spec:stx.sys.cli.application.spec.term.ArgumentSpec);
+  /**
+   * Annotate existing error
+   */
   E_Cli_Reason(f:CliFailure,reason:String);
   E_Cli_OptionExcludedBy(opt:stx.sys.cli.application.spec.OptionSpec.OptionSpecApi,v:stx.sys.cli.application.spec.OptionValue.OptionValueApi,tk:CliToken);
   E_Cli_NoValueFor(p:stx.sys.cli.application.spec.OptionSpec.OptionSpecApi);
   E_Cli_Parse(e:ParseFailure);
+  /**
+   * To avoid enforcing an explicit generic and passing it about.
+   */
   E_Cli_Embed(block:Void->Void);//Use the oppurtunity to throw an Error of a supersystem
 }
 abstract CliFailure(CliFailureSum) from CliFailureSum to CliFailureSum{

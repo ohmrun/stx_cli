@@ -1,6 +1,6 @@
-package stx.sys.cli.react;
+package sys.stx.cli.react;
 
-using stx.sys.cli.Logging;
+using sys.stx.cli.Logging;
 
 class Main{
   static public var handlers(get,null) : Queue<ProgramApi>;
@@ -31,14 +31,14 @@ class Main{
     //     return n;
     //   })
     // );
-    //handlers.add({ data : new stx.sys.cli.term.Command() });
-    //handlers.add({ data : new stx.sys.cli.term.Echo() });
+    //handlers.add({ data : new sys.stx.cli.term.Command() });
+    //handlers.add({ data : new sys.stx.cli.term.Echo() });
 
     react();
   }
   static public function reply(){
-    __.log().debug('reply ${Sys.cwd().get()} ${SysArgs.unit()}');
-    final context   = stx.sys.cli.CliContext.pull(Sys.cwd().get(),SysArgs.unit());
+    __.log().debug('reply ${Sys.cwd().get()} ${__.cli().SysArgs().unit()}');
+    final context   = __.cli().CliContext().pull(Sys.cwd().get(),__.cli().SysArgs().unit());
     final executor  = 
       Produce.lift(Fletcher.Then(
         context,
@@ -57,7 +57,7 @@ class Main{
     return executor;
   }
   static public function react(){
-    stx.sys.cli.react.Main.reply().environment(
+    sys.stx.cli.react.Main.reply().environment(
       () -> {
         __.log().info('done');
       },

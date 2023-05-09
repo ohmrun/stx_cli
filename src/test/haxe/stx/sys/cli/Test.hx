@@ -1,10 +1,10 @@
-package stx.sys.cli;
+package sys.stx.cli;
 
 using stx.Log;
 using stx.Nano;
 using stx.Test;
-import stx.sys.cli.Test;
-import stx.sys.cli.test.*;
+import sys.stx.cli.Test;
+import sys.stx.cli.test.*;
 
 class Test{
 static public function tests(){

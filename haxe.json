@@ -9,10 +9,16 @@
     "unit"  : {
       "--macro" : [
         "include('stx.sys.cli',true)",
-        "include('stx.sys.Cli',true)"
+        "include('sys.stx.cli',true)",
+        "include('sys.stx.Cli',true)"
       ],
       "interp" : {
         "--interp"  : true
+      },
+      "event" : {
+        "javascript" : {
+          "--js" : "build/unit/event/javascript/main.js"
+        }
       }
     },
     "main" : {

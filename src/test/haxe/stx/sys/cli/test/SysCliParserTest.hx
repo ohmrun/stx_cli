@@ -1,7 +1,7 @@
-package stx.sys.cli.test;
+package sys.stx.cli.test;
 
-import stx.sys.cli.SysCliParser;
-import stx.sys.cli.CliToken;
+import sys.stx.cli.SysCliParser;
+import sys.stx.cli.CliToken;
 
 class SysCliParserTest extends TestCase{
   public function test_(){

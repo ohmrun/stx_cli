@@ -17,6 +17,6 @@ package stx.sys.cli;
   private function get_self():Arguments return lift(this);
 
   public function reader(){
-    return stx.parse.lift.LiftArrayReader.reader(this.prj());
+    return stx.parse.lift.LiftArrayReader.reader(@:privateAccess this.prj());
   }
 }

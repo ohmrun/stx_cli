@@ -1,4 +1,4 @@
-package stx.sys.cli.test;
+package sys.stx.cli.test;
 
 class ReadmeTest extends TestCase{
   public function test(){
@@ -27,7 +27,7 @@ class ReadmeTest extends TestCase{
           ) 
         ]
     );
-    final val : Upshot<Option<stx.sys.cli.application.spec.SpecValue>,CliFailure> = __.cli().apply(spec);//uses Sys.args() as input
+    final val : Upshot<Option<sys.stx.cli.application.spec.SpecValue>,CliFailure> = __.cli().apply(spec);//uses Sys.args() as input
     trace(val);
   }
 }
