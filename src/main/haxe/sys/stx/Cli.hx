@@ -11,6 +11,13 @@ class Cli{
   static public function CliContext(self:stx.sys.cli.Module):STX<CliContext>{
     return STX;
   }
+  static public function apply(self:stx.sys.cli.Module,spec:Spec):Upshot<Option<SpecValue>,CliFailure>{
+    return (stx.sys.cli.SysCliParser.apply(Sys.args()).flat_map(
+      x -> spec.reply().apply(x.reader()).toUpshot().errate(
+        x -> E_Cli_Parse(x)
+      )
+    ));
+  }
 }
 typedef CliFailure          = stx.fail.CliFailure;
 typedef CliFailureSum       = stx.fail.CliFailure.CliFailureSum;

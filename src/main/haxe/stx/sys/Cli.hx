@@ -5,6 +5,7 @@ using stx.Nano;
 typedef SysArgs             = stx.sys.cli.SysArgs;
 typedef Arguments           = stx.sys.cli.Arguments;
 typedef CliParser           = stx.sys.cli.CliParser;
+typedef SysCliParser        = stx.sys.cli.SysCliParser;
 typedef ExecutionMethod     = stx.sys.cli.ExecutionMethod;
 typedef CliContext          = stx.sys.cli.CliContext;
 typedef CliToken            = stx.sys.cli.CliToken;

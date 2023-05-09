@@ -1,5 +1,7 @@
 package stx.sys.cli;
 
+using stx.Parse;
+
 import stx.parse.parsers.StringParsers in SParse;
 import stx.parse.Parser in Prs;
 using stx.sys.cli.CliParser;

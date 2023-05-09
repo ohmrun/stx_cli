@@ -1,15 +1,9 @@
-package sys.stx.cli;
+package stx.sys.cli;
 
 /**
  * Parser designed to pull a cluster of `CliToken`s from `Sys.args`
  */
 class SysCliParser{
-  static private function args(){
-    return std.Sys.args();
-  }
-  static public function reply(){
-    return apply(args());
-  }
   static public function apply(args:Cluster<String>){
     return (parse(args).toUpshot().fold(
       x   -> __.accept(x.fold(cls -> cls,() -> Cluster.unit())), 

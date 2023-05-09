@@ -8,15 +8,21 @@
     ],
     "unit"  : {
       "--macro" : [
-        "include('stx.sys.cli',true)",
-        "include('sys.stx.cli',true)",
-        "include('sys.stx.Cli',true)"
+        "include('stx.sys.cli',true)"
       ],
-      "interp" : {
-        "--interp"  : true
+      "sys" : {
+        "--macro" : [
+          "include('sys.stx.cli',true)",
+          "include('sys.stx.Cli',true)"
+          
+        ],
+        "interp" : {
+          "--interp"  : true
+        }
       },
       "event" : {
         "javascript" : {
+          "--macro" : ["exclude('sys',true)"],
           "--js" : "build/unit/event/javascript/main.js"
         }
       }
@@ -45,9 +51,19 @@
     }
   },
   "run" : {
+    "seq":[["if", ["==", ["hx","build",[0]], 0], ["hx","build",[1]], ["exit",-999]]],
     "test_run" : [
-      ["hx","build","run"],
-      ["neko","main.n","something","-a=1","better","--best"]
+      [
+        "seq",
+        ["build","run"],
+        ["neko","main.n","something","-a=1","better","--best"]
+      ]
+    ],
+    "units" : [
+      [
+        ["seq", "unit/sys/interp","unit/event/javascript"]
+      ]
     ]
   }
 }
+
