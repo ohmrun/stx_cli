@@ -1,8 +1,8 @@
 unit:
-    clear && hx build unit
+    clear && hb build unit
 test-interp:
-    @clear && hx build test/interp
+    @clear && hb build test/interp
 watch-test-interp:
     watchexec just test-interp
 run:
-    clear && hx build run
+    clear && hb build run

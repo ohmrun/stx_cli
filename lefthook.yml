@@ -16,7 +16,7 @@ pre-commit:
   parallel: true
   commands:
     unit:
-      run: hx run units
+      run: hb run units
 #     eslint:
 #       glob: "*.{js,ts,jsx,tsx}"
 #       run: yarn eslint {staged_files}

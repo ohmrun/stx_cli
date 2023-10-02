@@ -51,7 +51,7 @@
     }
   },
   "run" : {
-    "seq":[["if", ["==", ["hx","build",[0]], 0], ["hx","build",[1]], ["exit",-999]]],
+    "seq":[["if", ["==", ["hb","build",[0]], 0], ["hb","build",[1]], ["exit",-999]]],
     "units" : [
       [
         ["seq", "unit/sys/interp","unit/event/javascript"]
